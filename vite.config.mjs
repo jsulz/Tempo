@@ -3,11 +3,12 @@ import react from "npm:@vitejs/plugin-react@^4.2.1";
 
 import "npm:react@^18.2.0";
 import "npm:react-dom@^18.2.0";
-import "npm:bootstrap";
-import "npm:react-bootstrap";
+import "npm:twind";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  publicDir: "node_modules/.vite",
+  build: {
+    outDir: ".vite/deps",
+  },
 });

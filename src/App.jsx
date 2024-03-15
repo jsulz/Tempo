@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
-import "bootstrap/dist/css/bootstrap.css";
-import * as bootstrap from "bootstrap/dist/js/bootstrap";
-
 function App() {
   const [count, setCount] = useState(0);
 
