@@ -6,6 +6,9 @@
     "serve": "deno run --allow-net --allow-read https://deno.land/std@0.157.0/http/file_server.ts dist/"
   },
   "imports": {
-    "react": "npm:react@^18.2.0"
+    "react": "npm:react@^18.2.0",
+    "react-dom/client": "npm:react-dom@^18.2.0",
+    "react-bootstrap": "npm:react-bootstrap",
+    "bootstrap": "npm:bootstrap"
   }
 }
