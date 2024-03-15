@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import { tw } from "twind";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -28,6 +29,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <h1
+        className={tw`font-bold text(center 5xl white sm:gray-800 md:pink-700)`}
+      >
+        This is Twind!
+      </h1>
     </>
   );
 }
