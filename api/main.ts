@@ -17,7 +17,7 @@ app.use(Session.initMiddleware(store));
 //app.use(router.allowedMethods());
 app.use(
   oakCors({
-    origin: "http://localhost:80",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -29,7 +29,7 @@ const CLIENT_ID = env["CLIENT_ID"];
 
 router.get("/api/auth", async (context: Context) => {
   console.error(CLIENT_ID);
-  console.error(context);
+  console.error(context.request);
   // Examples of getting and setting variables on a session
   if (!(await context.state.session.has("pageCount"))) {
     await context.state.session.set("pageCount", 0);
