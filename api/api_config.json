@@ -1,0 +1,4 @@
+{
+  "scheme": "https://api.spotify.com/v1/",
+  "auth_scheme": "https://accounts.spotify.com/authorize"
+}
