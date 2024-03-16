@@ -13,3 +13,5 @@ stats.html
 .eslintcache
 
 .DS_Store
+
+tailwind.config.js

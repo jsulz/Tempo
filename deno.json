@@ -7,7 +7,6 @@
   },
   "imports": {
     "react": "npm:react@^18.2.0",
-    "react-dom/client": "npm:react-dom@^18.2.0",
-    "twind": "npm:twind"
+    "react-dom/client": "npm:react-dom@^18.2.0"
   }
 }
