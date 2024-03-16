@@ -26,9 +26,9 @@ app.use(router.routes());
 
 const env = await load();
 const CLIENT_ID = env["CLIENT_ID"];
+console.error(CLIENT_ID);
 
 router.get("/api/auth", async (context: Context) => {
-  console.error(CLIENT_ID);
   console.error(context.request);
   // Examples of getting and setting variables on a session
   if (!(await context.state.session.has("pageCount"))) {
