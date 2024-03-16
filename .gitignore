@@ -15,3 +15,5 @@ stats.html
 .DS_Store
 
 tailwind.config.js
+
+.env
