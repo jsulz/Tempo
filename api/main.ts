@@ -17,7 +17,7 @@ app.use(Session.initMiddleware(store));
 //app.use(router.allowedMethods());
 app.use(
   oakCors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:80",
     credentials: true,
   })
 );
