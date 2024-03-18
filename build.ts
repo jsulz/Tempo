@@ -13,5 +13,14 @@ builder.ignore([
   "./.gitignore",
 ]);
 
+/**
+ * Add our own browser entrypoint, since we
+ * aren't using the default
+ */
+builder.entrypoint("browser", {
+  path: "./src/app.tsx",
+  target: "browser",
+});
+
 // deno-lint-ignore no-unused-vars
 const result = await builder.build();
