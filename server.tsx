@@ -124,7 +124,4 @@ server.get("/api/artists", async (context) => {
   console.log(artists);
 });
 
-if (import.meta.main) {
-  serve(server.fetch);
-}
-export default server;
+Deno.serve(server.fetch);
