@@ -27,10 +27,27 @@ export interface Tokens {
 export interface ArtistObj {
   genres: Array<string>;
   name: string;
+  images: Array<ImageObject>;
   popularity: number;
 }
 
 export interface TopArtists {
-  total: number;
   artists: Array<ArtistObj>;
+}
+
+export interface AlbumObj {
+  name: string;
+  images: Array<ImageObject>;
+  release_date: string;
+}
+
+export interface TrackObj {
+  album: AlbumObj;
+  artists: Array<string>;
+  duration: number;
+  popularity: number;
+}
+
+export interface TopTracks {
+  tracks: Array<TrackObj>;
 }

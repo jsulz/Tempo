@@ -9,7 +9,11 @@ import {
   signIn,
   signOut,
 } from "https://deno.land/x/deno_kv_oauth/mod.ts";
-import { getSpotifyUser, getUsersTopArtist } from "./utils/spotifyclient.ts";
+import {
+  getSpotifyUser,
+  getUsersTopArtist,
+  getUsersTopTracks,
+} from "./utils/spotifyclient.ts";
 import { User, Tokens } from "./utils/types.ts";
 import { setUser, getUserBySession } from "./utils/db.ts";
 import App from "./src/app.tsx";
@@ -118,7 +122,22 @@ api.get("/artists", async (context) => {
   const artists = access_token
     ? await getUsersTopArtist(access_token)
     : undefined;
+  console.log(artists);
   return context.json(artists);
+});
+
+api.get("/tracks", async (context) => {
+  const tokens = await tokenHelper(context);
+  const access_token = tokens ? tokens.access_token : undefined;
+
+  if (!access_token) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const tracks = access_token
+    ? await getUsersTopTracks(access_token)
+    : undefined;
+  return context.json(tracks);
 });
 
 server.route("/api", api);

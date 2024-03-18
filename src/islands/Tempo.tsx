@@ -23,14 +23,15 @@ export default function Tempo(props: TempoProps) {
     const fetchData = async () => {
       console.log("here");
       const getTopArtists = await (await fetch("/api/artists")).json();
-      //const getTopTracks = await (await fetch("/api/tracks")).json();
+      const getTopTracks = await (await fetch("/api/tracks")).json();
       setTopArtists(getTopArtists);
-      //setTopTracks(getTopTracks);
+      setTopTracks(getTopTracks);
     };
     fetchData();
   }, []);
 
   console.log(topArtists);
+  console.log(topTracks);
 
   return (
     <div>
