@@ -1,7 +1,7 @@
 /// <reference lib="deno.unstable" />
 
 import { serve } from "https://deno.land/std@0.176.0/http/server.ts";
-import { createServer, createRouter } from "ultra/server.ts";
+import { createServer, createRouter, Context } from "ultra/server.ts";
 import { load } from "std/dotenv/mod.ts";
 import {
   createSpotifyOAuthConfig,
@@ -112,6 +112,18 @@ server.get("/log-out", async (context) => {
 const api = createRouter();
 
 api.get("/artists", async (context) => {
+  const tokens = await tokenHelper(context);
+  const access_token = tokens ? tokens.access_token : undefined;
+
+  const artists = access_token
+    ? await getUsersTopArtist(access_token)
+    : undefined;
+  console.log(artists);
+});
+
+server.route("/api", api);
+
+const tokenHelper = async (context: Context) => {
   const sessionId = await getSessionId(context.req.raw);
   const isSignedIn = sessionId != null;
 
@@ -119,13 +131,7 @@ api.get("/artists", async (context) => {
   const tokens =
     isSignedIn && user ? await getTokensByUser(user.id) : undefined;
 
-  const artists =
-    isSignedIn && tokens
-      ? await getUsersTopArtist(tokens.access_token)
-      : undefined;
-  console.log(artists);
-});
-
-server.route("/api", api);
+  return tokens;
+};
 
 Deno.serve(server.fetch);
