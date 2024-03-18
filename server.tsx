@@ -1,6 +1,5 @@
 /// <reference lib="deno.unstable" />
 
-import { serve } from "https://deno.land/std@0.176.0/http/server.ts";
 import { createServer, createRouter, Context } from "ultra/server.ts";
 import { load } from "std/dotenv/mod.ts";
 import {
@@ -15,7 +14,6 @@ import { User, Tokens } from "./utils/types.ts";
 import { setUser, getUserBySession } from "./utils/db.ts";
 import App from "./src/app.tsx";
 import { getTokensByUser } from "./utils/db.ts";
-import { TokenResponseError } from "https://deno.land/x/oauth2_client@v1.0.2/mod.ts";
 
 // Oauth setup
 await load({ export: true });
@@ -46,10 +44,6 @@ function ServerApp({
 }
 
 server.get("/", async (context) => {
-  /**
-   * Render the request
-   */
-
   const sessionId = await getSessionId(context.req.raw);
   const isSignedIn = sessionId != null;
 
@@ -124,7 +118,7 @@ api.get("/artists", async (context) => {
   const artists = access_token
     ? await getUsersTopArtist(access_token)
     : undefined;
-  console.log(artists);
+  console.log(artists.items[0]);
 });
 
 server.route("/api", api);
@@ -139,5 +133,34 @@ const tokenHelper = async (context: Context) => {
 
   return tokens;
 };
+
+/*
+server.get("*", async (context) => {
+
+  const sessionId = await getSessionId(context.req.raw);
+  const isSignedIn = sessionId != null;
+
+  const user = isSignedIn ? await getUserBySession(sessionId) : undefined;
+  const tokens =
+    isSignedIn && user ? await getTokensByUser(user.id) : undefined;
+
+  const requestUrl = new URL(context.req.url);
+  const result = await server.render(
+    <Router hook={staticLocationHook(requestUrl.pathname)}>
+      <App {...{ isSignedIn, tokens }} />
+    </Router>
+  );
+
+  const result = await server.renderWithContext(
+    <StaticRouter location={new URL(context.req.url).pathname}>
+      <App />
+    </StaticRouter>,
+    context
+  );
+  console.log("hello");
+  return context.body(result, 200, {
+    "content-type": "text/html; charset=utf-8",
+  });
+});*/
 
 Deno.serve(server.fetch);
