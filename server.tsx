@@ -109,11 +109,17 @@ server.get("/log-out", async (context) => {
   return await signOut(context.req.raw);
 });
 
+/* API routes */
+
 const api = createRouter();
 
 api.get("/artists", async (context) => {
   const tokens = await tokenHelper(context);
   const access_token = tokens ? tokens.access_token : undefined;
+
+  if (!access_token) {
+    return new Response("Unauthorized", { status: 401 });
+  }
 
   const artists = access_token
     ? await getUsersTopArtist(access_token)
