@@ -23,7 +23,7 @@ export async function getUsersTopArtist(token: string): Promise<TopArtists> {
 }
 
 export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
-  const url = "https://accounts.spotify.com/api/token";
+  const url = refreshSchema;
 
   const payload = {
     method: "POST",
@@ -50,6 +50,9 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
     refresh_token: response.refresh_token,
     expiration: expiration,
   };
+
+  console.log("New access tokens: ");
+  console.log(user_tokens);
 
   return user_tokens;
 }
