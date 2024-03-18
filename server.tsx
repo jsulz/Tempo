@@ -118,7 +118,7 @@ api.get("/artists", async (context) => {
   const artists = access_token
     ? await getUsersTopArtist(access_token)
     : undefined;
-  console.log(artists.items[0]);
+  return context.json(artists);
 });
 
 server.route("/api", api);

@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 
 interface CounterProps {
   start: number;
-  tokens: object;
-  handleClick: object;
 }
 
 export default function Counter(props: CounterProps) {

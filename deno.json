@@ -2,7 +2,7 @@
   "tasks": {
     "dev": "deno run -A --no-check --watch --unstable-kv ./server.tsx",
     "test": "deno test --allow-all",
-    "build": "deno run -A --unstable-kv ./build.js",
+    "build": "deno run -A --unstable-kv ./build.ts",
     "start": "ULTRA_MODE=production deno run -A --no-remote --unstable-kv ./server.tsx"
   },
   "lock": false,

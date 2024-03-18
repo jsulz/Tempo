@@ -2,8 +2,13 @@ import useAsset from "ultra/hooks/use-asset.js";
 import Nav from "./components/Nav.tsx";
 import Footer from "./components/Footer.tsx";
 import { Tokens } from "../utils/types.ts";
-import GetRecommendations from "./islands/GetRecommendations.tsx";
+
+import island from "ultra/hooks/use-island.js";
+import Tempo from "./islands/Tempo.tsx";
+
 import LogIn from "./islands/LogIn.tsx";
+
+const TempoIsland = island(Tempo);
 
 export default function App({
   isSignedIn,
@@ -53,7 +58,11 @@ export default function App({
             <div className="mt-5 justify-content-center">
               <p>Provider: This</p>
               <p>Signed in: {String(isSignedIn)}</p>
-              {isSignedIn ? <GetRecommendations /> : <LogIn />}
+              {isSignedIn ? (
+                <TempoIsland start={1} hydrationStrategy="visible" />
+              ) : (
+                <LogIn />
+              )}
             </div>
           </main>
           <Footer />
