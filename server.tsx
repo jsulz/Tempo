@@ -1,7 +1,7 @@
 /// <reference lib="deno.unstable" />
 
 import { serve } from "https://deno.land/std@0.176.0/http/server.ts";
-import { createServer } from "ultra/server.ts";
+import { createServer, createRouter } from "ultra/server.ts";
 import { load } from "std/dotenv/mod.ts";
 import {
   createSpotifyOAuthConfig,
@@ -109,7 +109,9 @@ server.get("/log-out", async (context) => {
   return await signOut(context.req.raw);
 });
 
-server.get("/api/artists", async (context) => {
+const api = createRouter();
+
+api.get("/artists", async (context) => {
   const sessionId = await getSessionId(context.req.raw);
   const isSignedIn = sessionId != null;
 
@@ -123,5 +125,7 @@ server.get("/api/artists", async (context) => {
       : undefined;
   console.log(artists);
 });
+
+server.route("/api", api);
 
 Deno.serve(server.fetch);
