@@ -2,7 +2,7 @@
 
 import { serve } from "https://deno.land/std@0.176.0/http/server.ts";
 import { createServer } from "ultra/server.ts";
-import { loadSync } from "std/dotenv/mod.ts";
+import { load } from "std/dotenv/mod.ts";
 import {
   createSpotifyOAuthConfig,
   getSessionId,
@@ -18,9 +18,9 @@ import { getTokensByUser } from "./utils/db.ts";
 import { TokenResponseError } from "https://deno.land/x/oauth2_client@v1.0.2/mod.ts";
 
 // Oauth setup
-loadSync({ export: true });
+await load({ export: true });
 const spotifyOauthClient = createSpotifyOAuthConfig({
-  redirectUri: "http://localhost:8000/callback",
+  redirectUri: Deno.env.get("SPOTIFY_CALLBACK"),
   scope: [
     "user-top-read",
     "user-read-private",
