@@ -25,6 +25,7 @@ export interface Tokens {
 }
 
 export interface ArtistObj {
+  id: string;
   genres: Array<string>;
   name: string;
   images: Array<ImageObject>;
@@ -46,8 +47,18 @@ export interface TrackObj {
   artists: Array<string>;
   duration: number;
   popularity: number;
+  id: string;
 }
 
 export interface TopTracks {
   tracks: Array<TrackObj>;
+}
+
+export interface Recommendations {
+  tracks: Array<TrackObj>;
+}
+
+export interface Seeds {
+  seed_songs: string;
+  seed_artists: string;
 }

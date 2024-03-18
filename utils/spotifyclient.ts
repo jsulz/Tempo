@@ -1,3 +1,4 @@
+import { assertEntrypointExists } from "ultra/lib/build/assert.ts";
 import {
   TopArtists,
   SpotifyUser,
@@ -6,6 +7,8 @@ import {
   ArtistObj,
   TrackObj,
   AlbumObj,
+  Recommendations,
+  Seeds,
 } from "./types.ts";
 const spotifySchema = "https://api.spotify.com/v1";
 const refreshSchema = "https://accounts.spotify.com/api/token";
@@ -32,6 +35,7 @@ export async function getUsersTopArtist(token: string): Promise<TopArtists> {
   const resp: TopArtists = { artists: [] };
   data.items.forEach((artist: ArtistObj) => {
     resp.artists.push({
+      id: artist.id,
       name: artist.name,
       images: artist.images,
       genres: artist.genres,
@@ -57,10 +61,46 @@ export async function getUsersTopTracks(token: string): Promise<TopTracks> {
       release_date: track.album.release_date,
     };
     resp.tracks.push({
+      id: track.id,
       album: album,
       artists: track.artists,
       duration: track.duration,
       popularity: track.popularity,
+    });
+  });
+
+  return resp;
+}
+
+// Get recommendations for a user
+export async function getRecommendations(
+  token: string,
+  seeds: Seeds
+): Promise<Recommendations> {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const params = new URLSearchParams({
+    seed_artists: seeds.seed_artists,
+    seed_songs: seeds.seed_songs,
+  });
+  const data = await (
+    await fetch(`${spotifySchema}/recommendations?${params}`, { headers })
+  ).json();
+  console.log(data);
+  const resp: Recommendations = { tracks: [] };
+  data.tracks.forEach((recommendation: TrackObj) => {
+    const album: AlbumObj = {
+      name: recommendation.album.name,
+      images: recommendation.album.images,
+      release_date: recommendation.album.release_date,
+    };
+    resp.tracks.push({
+      album: album,
+      id: recommendation.id,
+      artists: recommendation.artists,
+      duration: recommendation.duration,
+      popularity: recommendation.popularity,
     });
   });
 

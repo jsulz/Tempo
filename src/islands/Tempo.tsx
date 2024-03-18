@@ -33,6 +33,22 @@ export default function Tempo(props: TempoProps) {
   console.log(topArtists);
   console.log(topTracks);
 
+  if (topArtists && topTracks && !recommendations) {
+    const fetchRecommendations = async () => {
+      const params = new URLSearchParams({
+        seed_artists: topArtists.artists[0].id,
+        seed_songs: topTracks.tracks[0].id,
+      });
+      const getRecommendations = await (
+        await fetch(`api/recommendations?${params}`)
+      ).json();
+      setRecommendations(getRecommendations);
+    };
+    fetchRecommendations();
+  }
+
+  console.log(recommendations);
+
   return (
     <div>
       <p>
