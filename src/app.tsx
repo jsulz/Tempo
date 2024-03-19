@@ -6,7 +6,7 @@ import { Tokens } from "../utils/types.ts";
 import island from "ultra/hooks/use-island.js";
 import Tempo from "./islands/Tempo.tsx";
 
-import LogIn from "./islands/LogIn.tsx";
+import LogIn from "./components/LogIn.tsx";
 
 const TempoIsland = island(Tempo);
 
@@ -51,15 +51,18 @@ export default function App({
         <link rel="preload" as="style" href={useAsset("/style.css")} />
         <link rel="stylesheet" href={useAsset("/style.css")} />
       </head>
-      <body className="text-center">
-        <div className="container d-flex h-100 flex-column">
+      <body className="h-100">
+        <div className="container d-flex h-100">
           <Nav />
           <main role="main">
-            <div className="mt-5 justify-content-center">
-              <p>Provider: This</p>
+            <div className="mt-5">
               <p>Signed in: {String(isSignedIn)}</p>
               {isSignedIn ? (
-                <TempoIsland start={1} hydrationStrategy="visible" />
+                <TempoIsland
+                  tokens={tokens}
+                  start={1}
+                  hydrationStrategy="visible"
+                />
               ) : (
                 <LogIn />
               )}

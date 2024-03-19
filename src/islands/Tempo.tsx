@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-
+import Player from "./Player.tsx";
 interface TempoProps {
   start: number;
+  tokens: object;
 }
 
 export default function Tempo(props: TempoProps) {
@@ -12,28 +13,20 @@ export default function Tempo(props: TempoProps) {
   const [topArtists, setTopArtists] = useState(null);
   const [count, setCount] = useState(props.start);
   const [hydrated, setHydrated] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (ref.current) {
-      console.log("hydrated", performance.now());
-      setHydrated(true);
-    }
-    console.log("thello");
     const fetchData = async () => {
-      console.log("here");
       const getTopArtists = await (await fetch("/api/artists")).json();
       const getTopTracks = await (await fetch("/api/tracks")).json();
-      setTopArtists(getTopArtists);
-      setTopTracks(getTopTracks);
+      if (getTopArtists && getTopTracks) {
+        setTopArtists(getTopArtists);
+        setTopTracks(getTopTracks);
+      }
     };
     fetchData();
   }, []);
 
-  console.log(topArtists);
-  console.log(topTracks);
-
-  if (topArtists && topTracks && !recommendations) {
+  useEffect(() => {
     const fetchRecommendations = async () => {
       const params = new URLSearchParams({
         seed_artists: topArtists.artists[0].id,
@@ -44,22 +37,24 @@ export default function Tempo(props: TempoProps) {
       ).json();
       setRecommendations(getRecommendations);
     };
-    fetchRecommendations();
-  }
+    if (topTracks && topArtists) {
+      fetchRecommendations();
+    }
+  }, [topTracks, topArtists]);
 
   console.log(recommendations);
 
   return (
     <div>
+      <Player tokens={props.tokens} />
       <p>
         <a href="/log-out">Sign Out</a>
       </p>
-      <div ref={ref}>
-        <p style={{ color: hydrated ? "green" : "red" }}>Hydrated</p>
-        <p>{count}</p>
-        <button onClick={() => setCount(count - 1)}>-1</button>
-        <button onClick={() => setCount(count + 1)}>+1</button>
-      </div>
+      <p style={{ color: hydrated ? "green" : "red" }}>Hydrated</p>
+      <p>{count}</p>
+      <button onClick={() => setCount(count - 1)}>-1</button>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
     </div>
   );
 }
