@@ -45,17 +45,18 @@ export default function Tempo(props: TempoProps) {
   console.log(recommendations);
 
   return (
-    <div>
-      <Player tokens={props.tokens} />
-      <p>
-        <a href="/log-out">Sign Out</a>
-      </p>
-      <p style={{ color: hydrated ? "green" : "red" }}>Hydrated</p>
-      <p>{count}</p>
-      <button onClick={() => setCount(count - 1)}>-1</button>
-      <button onClick={() => setCount(count + 1)}>+1</button>
-      <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
-    </div>
+    <main role="main">
+      <div className="row mt-5 ">
+        <Player tokens={props.tokens} />
+        <p>
+          <a href="/log-out">Sign Out</a>
+        </p>
+        <p style={{ color: hydrated ? "green" : "red" }}>Hydrated</p>
+        <p>{count}</p>
+        <button onClick={() => setCount(count - 1)}>-1</button>
+        <button onClick={() => setCount(count + 1)}>+1</button>
+      </div>
+    </main>
   );
 }
 

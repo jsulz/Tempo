@@ -52,22 +52,17 @@ export default function App({
         <link rel="stylesheet" href={useAsset("/style.css")} />
       </head>
       <body className="h-100">
-        <div className="container d-flex h-100">
+        <div className="container d-flex h-100 flex-column">
           <Nav />
-          <main role="main">
-            <div className="mt-5">
-              <p>Signed in: {String(isSignedIn)}</p>
-              {isSignedIn ? (
-                <TempoIsland
-                  tokens={tokens}
-                  start={1}
-                  hydrationStrategy="visible"
-                />
-              ) : (
-                <LogIn />
-              )}
-            </div>
-          </main>
+          {isSignedIn ? (
+            <TempoIsland
+              tokens={tokens}
+              start={1}
+              hydrationStrategy="visible"
+            />
+          ) : (
+            <LogIn />
+          )}
           <Footer />
         </div>
       </body>

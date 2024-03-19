@@ -1,7 +1,7 @@
 import useAsset from "ultra/hooks/use-asset.js";
 export default function Footer() {
   return (
-    <footer className="container-fluid footer mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 p-2 ">
+    <footer className="container-fluid footer mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 p-2 flex-column">
       <div className="container">
         <div className="row">
           <div className="col-4 d-flex align-items-center">

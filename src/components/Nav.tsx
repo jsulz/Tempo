@@ -1,6 +1,6 @@
 export default function Nav() {
   return (
-    <header className="mb-auto">
+    <header>
       <nav className="navbar navbar-expand-md fixed-top">
         <div className="container">
           <a className="navbar-brand" href="/">
@@ -22,11 +22,6 @@ export default function Nav() {
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link" href="/about">
-                  About
-                </a>
-              </li>
               <li className="nav-item">
                 <a className="nav-link" href="https://www.jsulz.com/contact">
                   Contact <i className="bi bi-box-arrow-up-right"></i>
