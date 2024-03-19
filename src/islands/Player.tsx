@@ -72,12 +72,11 @@ export default function Player(props) {
       player.connect();
     };
   }, []);
-  console.log(current_track.album.images);
 
   if (!is_active) {
     return (
       <>
-        <div className="container">
+        <div className="row">
           <div className="main-wrapper">
             <b>
               {" "}
@@ -90,10 +89,10 @@ export default function Player(props) {
   } else {
     return (
       <>
-        <div className="container">
+        <div className="row">
           <div className="main-wrapper">
             <img
-              src={current_track.album.images[0].url}
+              src={current_track.album.images[1].url}
               className="now-playing__cover"
               alt=""
             />

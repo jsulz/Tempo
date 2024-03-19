@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Player from "./Player.tsx";
+import Controls from "./Controls.tsx";
+import SpotifyData from "./SpotifyData.tsx";
 interface TempoProps {
   start: number;
   tokens: object;
@@ -26,6 +28,14 @@ export default function Tempo(props: TempoProps) {
     fetchData();
   }, []);
 
+  let data = null;
+  if (recommendations === null && topArtists !== null && topTracks !== null) {
+    data = [topTracks, topArtists];
+  } else if (recommendations !== null) {
+    data = [recommendations];
+  }
+
+  /*
   useEffect(() => {
     const fetchRecommendations = async () => {
       const params = new URLSearchParams({
@@ -41,16 +51,31 @@ export default function Tempo(props: TempoProps) {
       fetchRecommendations();
     }
   }, [topTracks, topArtists]);
+  */
 
   console.log(recommendations);
 
   return (
     <main role="main">
       <div className="row mt-5 ">
-        <Player tokens={props.tokens} />
-        <p>
-          <a href="/log-out">Sign Out</a>
-        </p>
+        <div className="col-12 col-md-9">
+          <Player tokens={props.tokens} />
+          {!recommendations ? (
+            <SpotifyData data={data} />
+          ) : (
+            <SpotifyData data={data} />
+          )}
+        </div>
+        <div className="col-12 col-md-3">
+          <div className="row">
+            <p>
+              <a href="/log-out">Sign Out</a>
+            </p>
+          </div>
+          <div className="row">
+            <Controls />
+          </div>
+        </div>
         <p style={{ color: hydrated ? "green" : "red" }}>Hydrated</p>
         <p>{count}</p>
         <button onClick={() => setCount(count - 1)}>-1</button>
