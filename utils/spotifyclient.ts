@@ -133,9 +133,7 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
 
   // Set up the tokens that we will store for future API calls
   const currentTime = new Date().getTime() / 1000;
-  const expiration = response.expires_in
-    ? currentTime + response.expires_in
-    : undefined;
+  const expiration = response.expires_in ? currentTime + 5 : undefined;
 
   const user_tokens: Tokens = {
     access_token: response.access_token,

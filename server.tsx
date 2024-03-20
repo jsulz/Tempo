@@ -83,9 +83,7 @@ server.get("/callback", async (context) => {
 
   // Set up the tokens that we will store for future API calls
   const currentTime = new Date().getTime() / 1000;
-  const expiration = tokens.expiresIn
-    ? currentTime + tokens.expiresIn
-    : undefined;
+  const expiration = tokens.expiresIn ? currentTime + 5 : undefined;
 
   // Figure out how to squelch this better
   if (!tokens.refreshToken) {
