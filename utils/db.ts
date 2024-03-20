@@ -26,6 +26,9 @@ export async function getTokensByUser(user_id: string) {
     tokens.value.expiration &&
     tokens.value.expiration < currTime
   ) {
+    console.log("old tokens");
+    console.log(tokens.value);
+
     console.log("getting new tokens");
     const new_tokens = await refreshAccessTokens(tokens.value);
     await kv.atomic().set(["tokens_by_user", user_id], new_tokens).commit();

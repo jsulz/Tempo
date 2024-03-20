@@ -1,4 +1,3 @@
-import { assertEntrypointExists } from "ultra/lib/build/assert.ts";
 import {
   TopArtists,
   SpotifyUser,
