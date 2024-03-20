@@ -11,16 +11,23 @@ export default function SpotifyData({ data }) {
         );
         html.push(heading);
         if (property == "tracks") {
-          const column_els = element[property].map((item) => {
-            return (
-              <div className="col" key={item.id}>
-                <p>{item.id}</p>
-              </div>
-            );
-          });
           const final = (
-            <div className="row row-cols-1 row-cols-sm-3">
-              {column_els.map((item) => item)}
+            <div
+              className="row row-cols-1 row-cols-sm-3"
+              key={`${property.toUpperCase()}-items`}
+            >
+              {element[property].map((item) => {
+                return (
+                  <div className="col" key={item.id}>
+                    <img className="img-fluid" src={item.album.images[1].url} />
+                    <p>
+                      {item.name} from {item.album.name}
+                    </p>
+                    <p>By: {item.artists.map((artist) => artist).join(", ")}</p>
+                    <p>{item.album.name}</p>
+                  </div>
+                );
+              })}
             </div>
           );
           html.push(final);
@@ -28,12 +35,17 @@ export default function SpotifyData({ data }) {
           const column_els = element[property].map((item) => {
             return (
               <div className="col" key={item.id}>
-                <p>{item.id}</p>
+                <img className="img-fluid" src={item.images[1].url} />
+                <p>{item.name}</p>
+                <p>{item.genres.map((genre) => genre).join(", ")}</p>
               </div>
             );
           });
           const final = (
-            <div className="row row-cols-1 row-cols-sm-3">
+            <div
+              className="row row-cols-1 row-cols-sm-3"
+              key={`${property.toUpperCase()}-items`}
+            >
               {column_els.map((item) => item)}
             </div>
           );

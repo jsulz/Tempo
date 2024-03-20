@@ -60,15 +60,17 @@ export async function getUsersTopTracks(token: string): Promise<TopTracks> {
       images: track.album.images,
       release_date: track.album.release_date,
     };
+    const artists = track.artists.map((artist) => artist.name);
     resp.tracks.push({
       id: track.id,
+      name: track.name,
       album: album,
-      artists: track.artists,
+      artists: artists,
       duration: track.duration,
       popularity: track.popularity,
     });
   });
-
+  console.log(data);
   return resp;
 }
 

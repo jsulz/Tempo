@@ -48,6 +48,7 @@ export interface TrackObj {
   duration: number;
   popularity: number;
   id: string;
+  name: string;
 }
 
 export interface TopTracks {
