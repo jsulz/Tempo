@@ -13,7 +13,7 @@ const spotifySchema = "https://api.spotify.com/v1";
 const refreshSchema = "https://accounts.spotify.com/api/token";
 import { load } from "std/dotenv/mod.ts";
 
-const env = await load();
+await load({ export: true });
 // get new access token
 export async function getSpotifyUser(token: string): Promise<SpotifyUser> {
   const headers = {
@@ -116,7 +116,7 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
   const url = refreshSchema;
 
   console.log(tokens.refresh_token);
-  console.log(env["SPOTIFY_CLIENT_ID"]);
+  console.log(Deno.env.get("SPOTIFY_CLIENT_ID"));
 
   const payload = {
     method: "POST",
@@ -126,7 +126,7 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
     body: new URLSearchParams({
       grant_type: "refresh_token",
       refresh_token: tokens.refresh_token,
-      client_id: env["SPOTIFY_CLIENT_ID"],
+      client_id: Deno.env.get("SPOTIFY_CLIENT_ID"),
     }),
   };
   const body = await fetch(url, payload);
