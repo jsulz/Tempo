@@ -115,6 +115,9 @@ export async function getRecommendations(
 export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
   const url = refreshSchema;
 
+  console.log(tokens.refresh_token);
+  console.log(env["SPOTIFY_CLIENT_ID"]);
+
   const payload = {
     method: "POST",
     headers: {
