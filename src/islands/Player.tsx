@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 const track = {
   name: "",
   album: {
-    images: [{ url: "" }],
+    images: [{ height: 1, width: 1, size: "UNKNOWN", url: "" }],
   },
   artists: [{ name: "" }],
 };
@@ -15,7 +15,9 @@ export default function Player(props) {
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState(undefined);
   const [current_track, setTrack] = useState(track);
-
+  const track_image = current_track.album.images.filter(
+    (image) => image.size === "UNKNOWN"
+  );
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -92,7 +94,7 @@ export default function Player(props) {
         <div className="row">
           <div className="main-wrapper">
             <img
-              src={current_track.album.images[1].url}
+              src={track_image[0].url}
               className="now-playing__cover"
               alt=""
             />

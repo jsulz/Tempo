@@ -21,10 +21,24 @@ export default function SpotifyData({ data }) {
                   <div className="col" key={item.id}>
                     <img className="img-fluid" src={item.album.images[1].url} />
                     <p>
-                      {item.name} from {item.album.name}
+                      <a href={item.external_urls.spotify}>{item.name}</a> from{" "}
+                      <a href={item.album.external_urls.spotify}>
+                        {item.album.name}
+                      </a>
                     </p>
-                    <p>By: {item.artists.map((artist) => artist).join(", ")}</p>
-                    <p>{item.album.name}</p>
+                    <p>
+                      By:{" "}
+                      {item.artists.map((artist) => {
+                        return (
+                          <>
+                            <a href={artist.external_urls.spotify}>
+                              {artist.name}
+                            </a>
+                            &nbsp;
+                          </>
+                        );
+                      })}
+                    </p>
                   </div>
                 );
               })}
@@ -36,7 +50,9 @@ export default function SpotifyData({ data }) {
             return (
               <div className="col" key={item.id}>
                 <img className="img-fluid" src={item.images[1].url} />
-                <p>{item.name}</p>
+                <p>
+                  <a href={item.external_urls.spotify}>{item.name}</a>
+                </p>
                 <p>{item.genres.map((genre) => genre).join(", ")}</p>
               </div>
             );

@@ -24,12 +24,17 @@ export interface Tokens {
   expiration: number | undefined;
 }
 
+export interface ExternalURLs {
+  spotify: string;
+}
+
 export interface ArtistObj {
   id: string;
   genres: Array<string>;
   name: string;
   images: Array<ImageObject>;
   popularity: number;
+  external_urls: ExternalURLs;
 }
 
 export interface TopArtists {
@@ -40,15 +45,18 @@ export interface AlbumObj {
   name: string;
   images: Array<ImageObject>;
   release_date: string;
+  artists: Array<ArtistObj>;
+  external_urls: ExternalURLs;
 }
 
 export interface TrackObj {
   album: AlbumObj;
-  artists: Array<string>;
+  artists: Array<ArtistObj>;
   duration: number;
   popularity: number;
   id: string;
   name: string;
+  external_urls: ExternalURLs;
 }
 
 export interface TopTracks {

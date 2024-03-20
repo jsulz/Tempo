@@ -40,8 +40,10 @@ export async function getUsersTopArtist(token: string): Promise<TopArtists> {
       images: artist.images,
       genres: artist.genres,
       popularity: artist.popularity,
+      external_urls: artist.external_urls,
     });
   });
+  console.log(data.items[0]);
   return resp;
 }
 
@@ -59,18 +61,20 @@ export async function getUsersTopTracks(token: string): Promise<TopTracks> {
       name: track.album.name,
       images: track.album.images,
       release_date: track.album.release_date,
+      artists: track.album.artists,
+      external_urls: track.album.external_urls,
     };
-    const artists = track.artists.map((artist) => artist.name);
     resp.tracks.push({
       id: track.id,
       name: track.name,
       album: album,
-      artists: artists,
+      artists: track.artists,
       duration: track.duration,
       popularity: track.popularity,
+      external_urls: track.external_urls,
     });
   });
-  console.log(data);
+  console.log(data.items[data.items.length - 1]);
   return resp;
 }
 
