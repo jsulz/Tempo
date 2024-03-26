@@ -2,6 +2,7 @@ export interface ImageObject {
   url: string;
   height: number;
   width: number;
+  size?: string;
 }
 
 export interface SpotifyUser {
@@ -34,7 +35,7 @@ export interface ArtistObj {
   name: string;
   images: Array<ImageObject>;
   popularity: number;
-  external_urls: ExternalURLs;
+  external_urls?: ExternalURLs;
 }
 
 export interface TopArtists {
@@ -46,7 +47,7 @@ export interface AlbumObj {
   images: Array<ImageObject>;
   release_date: string;
   artists: Array<ArtistObj>;
-  external_urls: ExternalURLs;
+  external_urls?: ExternalURLs;
 }
 
 export interface TrackObj {
@@ -56,7 +57,7 @@ export interface TrackObj {
   popularity: number;
   id: string;
   name: string;
-  external_urls: ExternalURLs;
+  external_urls?: ExternalURLs;
 }
 
 export interface TopTracks {

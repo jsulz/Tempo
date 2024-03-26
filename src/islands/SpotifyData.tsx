@@ -1,5 +1,11 @@
-export default function SpotifyData({ data }) {
-  const html = [];
+/**
+ * Renders Spotify data from the provided data object prop.
+ * Iterates through each top level property in the data object, rendering a heading.
+ * For 'tracks', renders each track as a card with image, name, album, artist info.
+ * For other properties, renders items in a grid with image and name.
+ */
+export default function SpotifyData({ data }: { data: any }) {
+  const html: JSX.Element[] = [];
   if (data) {
     console.log(data);
     data.forEach((element) => {
@@ -74,7 +80,7 @@ export default function SpotifyData({ data }) {
     <>
       {data && (
         <>
-          {html.map((item) => {
+          {html.map((item: JSX.Element) => {
             return item;
           })}
         </>

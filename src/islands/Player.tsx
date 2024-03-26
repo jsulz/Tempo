@@ -1,23 +1,35 @@
 // Initial scaffolding from https://github.com/spotify/spotify-web-playback-sdk-example/blob/main/src/WebPlayback.jsx
 
 import React, { useState, useEffect } from "react";
+import { Tokens, TrackObj } from "../../utils/types.ts";
 
-const track = {
-  name: "",
-  album: {
-    images: [{ height: 1, width: 1, size: "UNKNOWN", url: "" }],
-  },
-  artists: [{ name: "" }],
-};
+interface PlayerProps {
+  tokens: Tokens;
+  current_track: TrackObj;
+  setTrack: React.Dispatch<React.SetStateAction<TrackObj>>;
+}
 
-export default function Player(props) {
+/**
+ * Renders the Spotify player UI and handles playback state.
+ * Uses the Spotify Player SDK to initialize and control playback.
+ *
+ * Props:
+ * - tokens: OAuth tokens for authorizing with Spotify
+ * - current_track: The currently playing track object
+ * - setTrack: Callback to update the currently playing track
+ */
+export default function Player({
+  tokens,
+  current_track,
+  setTrack,
+}: PlayerProps) {
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState(undefined);
-  const [current_track, setTrack] = useState(track);
   const track_image = current_track.album.images.filter(
-    (image) => image.size === "UNKNOWN"
+    (image) => image.size === "SMALL"
   );
+  const playerName = "Tempo";
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -27,21 +39,21 @@ export default function Player(props) {
 
     window.onSpotifyWebPlaybackSDKReady = () => {
       const player = new window.Spotify.Player({
-        name: "Web Playback SDK",
+        name: playerName,
         getOAuthToken: (cb) => {
-          cb(props.tokens.access_token);
+          cb(tokens.access_token);
         },
         volume: 0.5,
       });
 
       setPlayer(player);
 
-      player.addListener("ready", ({ device_id }) => {
+      player.addListener("ready", ({ device_id }: { device_id: string }) => {
         console.log("Ready with Device ID", device_id);
         const options = {
           method: "PUT",
           headers: {
-            Authorization: `Bearer ${props.tokens.access_token}`,
+            Authorization: `Bearer ${tokens.access_token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ device_ids: [device_id] }),

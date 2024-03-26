@@ -14,6 +14,7 @@ const refreshSchema = "https://accounts.spotify.com/api/token";
 import { load } from "std/dotenv/mod.ts";
 
 await load({ export: true });
+
 // get new access token
 export async function getSpotifyUser(token: string): Promise<SpotifyUser> {
   const headers = {
@@ -116,7 +117,6 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
   const url = refreshSchema;
 
   console.log(tokens.refresh_token);
-  console.log(Deno.env.get("SPOTIFY_CLIENT_ID"));
 
   const payload = {
     method: "POST",
@@ -126,21 +126,17 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
     body: new URLSearchParams({
       grant_type: "refresh_token",
       refresh_token: tokens.refresh_token,
-      client_id: Deno.env.get("SPOTIFY_CLIENT_ID"),
+      client_id: Deno.env.get("SPOTIFY_CLIENT_ID")!,
     }),
   };
   const body = await fetch(url, payload);
   const response = await body.json();
 
-  console.log("body");
-  console.log(body);
-
-  console.log("response");
-  console.log(response);
-
   // Set up the tokens that we will store for future API calls
   const currentTime = new Date().getTime() / 1000;
-  const expiration = response.expires_in ? currentTime + 5 : undefined;
+  const expiration = response.expires_in
+    ? currentTime + response.expires_in
+    : undefined;
 
   const user_tokens: Tokens = {
     access_token: response.access_token,

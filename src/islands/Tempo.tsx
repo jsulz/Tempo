@@ -2,10 +2,35 @@ import { useState, useRef, useEffect } from "react";
 import Player from "./Player.tsx";
 import Controls from "./Controls.tsx";
 import SpotifyData from "./SpotifyData.tsx";
+import { Tokens, TrackObj } from "../../utils/types.ts";
+
 interface TempoProps {
   start: number;
-  tokens: object;
+  tokens: Tokens;
 }
+
+const track: TrackObj = {
+  name: "",
+  duration: 0,
+  popularity: 0,
+  id: "",
+  album: {
+    images: [{ height: 1, width: 1, size: "UNKNOWN", url: "" }],
+    name: "",
+    release_date: "",
+    artists: [],
+  },
+  artists: [
+    {
+      name: "",
+      id: "",
+      genres: [""],
+      images: [],
+      popularity: 0,
+      external_urls: { spotify: "" },
+    },
+  ],
+};
 
 export default function Tempo(props: TempoProps) {
   // If we don't have recommendations, then we should show getrecommendations and get info from Spofity
@@ -15,6 +40,7 @@ export default function Tempo(props: TempoProps) {
   const [topArtists, setTopArtists] = useState(null);
   const [count, setCount] = useState(props.start);
   const [hydrated, setHydrated] = useState(false);
+  const [current_track, setTrack] = useState(track);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,29 +83,31 @@ export default function Tempo(props: TempoProps) {
 
   return (
     <main role="main">
-      <div className="row mt-5 ">
+      <div className="row mt-3">
+        <div className="col-12 col-md-3 mt-5 sticky-top">
+          <div className="row row-cols-4 row-cols-md-1 sticky-top">
+            <div className="col mt-5">
+              <p>
+                <a href="/log-out">Sign Out</a>
+              </p>
+            </div>
+            <div className="col">
+              <Player
+                tokens={props.tokens}
+                current_track={current_track}
+                setTrack={setTrack}
+              />
+            </div>
+            <Controls />
+          </div>
+        </div>
         <div className="col-12 col-md-9">
-          <Player tokens={props.tokens} />
           {!recommendations ? (
             <SpotifyData data={data} />
           ) : (
             <SpotifyData data={data} />
           )}
         </div>
-        <div className="col-12 col-md-3">
-          <div className="row">
-            <p>
-              <a href="/log-out">Sign Out</a>
-            </p>
-          </div>
-          <div className="row">
-            <Controls />
-          </div>
-        </div>
-        <p style={{ color: hydrated ? "green" : "red" }}>Hydrated</p>
-        <p>{count}</p>
-        <button onClick={() => setCount(count - 1)}>-1</button>
-        <button onClick={() => setCount(count + 1)}>+1</button>
       </div>
     </main>
   );
