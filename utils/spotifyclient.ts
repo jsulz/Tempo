@@ -100,9 +100,11 @@ export async function getRecommendations(
       name: recommendation.album.name,
       images: recommendation.album.images,
       release_date: recommendation.album.release_date,
+      artists: recommendation.album.artists,
     };
     resp.tracks.push({
       album: album,
+      name: recommendation.name,
       id: recommendation.id,
       artists: recommendation.artists,
       duration: recommendation.duration,
@@ -112,6 +114,12 @@ export async function getRecommendations(
 
   return resp;
 }
+
+export async function playTrack(
+  token: string,
+  device_id: string,
+  track_uri: string
+): Promise<void> {}
 
 export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
   const url = refreshSchema;

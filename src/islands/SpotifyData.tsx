@@ -1,10 +1,18 @@
+import { TrackObj } from "../../utils/types.ts";
+
 /**
  * Renders Spotify data from the provided data object prop.
  * Iterates through each top level property in the data object, rendering a heading.
  * For 'tracks', renders each track as a card with image, name, album, artist info.
  * For other properties, renders items in a grid with image and name.
  */
-export default function SpotifyData({ data }: { data: any }) {
+export default function SpotifyData({
+  data,
+  currently_playing,
+}: {
+  data: any;
+  currently_playing: TrackObj;
+}) {
   const html: JSX.Element[] = [];
   if (data) {
     console.log(data);
@@ -19,7 +27,7 @@ export default function SpotifyData({ data }: { data: any }) {
         if (property == "tracks") {
           const final = (
             <div
-              className="row row-cols-1 row-cols-sm-3"
+              className="row row-cols-2 row-cols-sm-4 row-cols-lg-5"
               key={`${property.toUpperCase()}-items`}
             >
               {element[property].map((item) => {
@@ -65,7 +73,7 @@ export default function SpotifyData({ data }: { data: any }) {
           });
           const final = (
             <div
-              className="row row-cols-1 row-cols-sm-3"
+              className="row row-cols-2 row-cols-sm-4 row-cols-lg-5"
               key={`${property.toUpperCase()}-items`}
             >
               {column_els.map((item) => item)}

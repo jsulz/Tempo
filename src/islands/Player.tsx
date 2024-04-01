@@ -26,6 +26,7 @@ export default function Player({
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState(undefined);
+  console.log(current_track);
   const track_image = current_track.album.images.filter(
     (image) => image.size === "SMALL"
   );

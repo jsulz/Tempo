@@ -103,7 +103,7 @@ export default function Tempo(props: TempoProps) {
         </div>
         <div className="col-12 col-md-9">
           {!recommendations ? (
-            <SpotifyData data={data} />
+            <SpotifyData data={data} currently_playing={current_track} />
           ) : (
             <SpotifyData data={data} />
           )}
