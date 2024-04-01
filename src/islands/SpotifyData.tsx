@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { TrackObj } from "../../utils/types.ts";
 
 /**
@@ -9,10 +10,23 @@ import { TrackObj } from "../../utils/types.ts";
 export default function SpotifyData({
   data,
   currently_playing,
+  playTrack,
 }: {
   data: any;
   currently_playing: TrackObj;
+  playTrack: (track_uri: string) => void;
 }) {
+  const [playing, setPlaying] = useState(false);
+
+  const handleTrackClick = (e, track) => {
+    e.preventDefault();
+    if (playing) {
+      setPlaying(false);
+    } else {
+      setPlaying(true);
+    }
+    playTrack(track);
+  };
   const html: JSX.Element[] = [];
   if (data) {
     console.log(data);
@@ -31,6 +45,15 @@ export default function SpotifyData({
               key={`${property.toUpperCase()}-items`}
             >
               {element[property].map((item) => {
+                let icon = null;
+                const play = <i className="bi bi-play-circle"></i>;
+                const pause = <i className="bi bi-pause-circle"></i>;
+                if (item.uri == currently_playing.uri) {
+                  icon = playing ? pause : play;
+                } else {
+                  icon = play;
+                }
+
                 return (
                   <div className="col" key={item.id}>
                     <img className="img-fluid" src={item.album.images[1].url} />
@@ -53,6 +76,12 @@ export default function SpotifyData({
                         );
                       })}
                     </p>
+                    <button
+                      className="btn btn-primary"
+                      onClick={(e) => handleTrackClick(e, item)}
+                    >
+                      {icon}
+                    </button>
                   </div>
                 );
               })}

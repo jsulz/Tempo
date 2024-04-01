@@ -72,6 +72,7 @@ export async function getUsersTopTracks(token: string): Promise<TopTracks> {
       duration: track.duration,
       popularity: track.popularity,
       external_urls: track.external_urls,
+      uri: track.uri,
     });
   });
   console.log(data.items[data.items.length - 1]);
@@ -117,9 +118,21 @@ export async function getRecommendations(
 
 export async function playTrack(
   token: string,
-  device_id: string,
   track_uri: string
-): Promise<void> {}
+): Promise<string> {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+  const options = {
+    method: "PUT",
+    headers: headers,
+    body: JSON.stringify({ uris: [track_uri], position_ms: 0 }),
+  };
+  const response = await fetch(`${spotifySchema}/me/player/play`, options);
+  console.log(response);
+  return response.text();
+}
 
 export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
   const url = refreshSchema;

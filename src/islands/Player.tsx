@@ -7,6 +7,8 @@ interface PlayerProps {
   tokens: Tokens;
   current_track: TrackObj;
   setTrack: React.Dispatch<React.SetStateAction<TrackObj>>;
+  player: any;
+  setPlayer: React.Dispatch<React.SetStateAction<any>>;
 }
 
 /**
@@ -22,13 +24,15 @@ export default function Player({
   tokens,
   current_track,
   setTrack,
+  player,
+  setPlayer,
 }: PlayerProps) {
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
-  const [player, setPlayer] = useState(undefined);
+
   console.log(current_track);
   const track_image = current_track.album.images.filter(
-    (image) => image.size === "SMALL"
+    (image) => image.height === 64
   );
   const playerName = "Tempo";
   useEffect(() => {

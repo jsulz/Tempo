@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Player from "./Player.tsx";
 import Controls from "./Controls.tsx";
 import SpotifyData from "./SpotifyData.tsx";
@@ -38,9 +38,8 @@ export default function Tempo(props: TempoProps) {
   const [recommendations, setRecommendations] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
-  const [count, setCount] = useState(props.start);
-  const [hydrated, setHydrated] = useState(false);
   const [current_track, setTrack] = useState(track);
+  const [player, setPlayer] = useState(undefined);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +78,18 @@ export default function Tempo(props: TempoProps) {
   }, [topTracks, topArtists]);
   */
 
-  console.log(recommendations);
+  const updatePlayingSong = async (track: TrackObj) => {
+    console.log(track.uri, current_track.uri);
+    if (track.uri === current_track.uri) {
+      player.togglePlay();
+    } else {
+      const play = async () => {
+        await fetch(`/api/play?track_uri=${track.uri}`);
+        setTrack(track);
+      };
+      play();
+    }
+  };
 
   return (
     <main role="main">
@@ -96,6 +106,8 @@ export default function Tempo(props: TempoProps) {
                 tokens={props.tokens}
                 current_track={current_track}
                 setTrack={setTrack}
+                player={player}
+                setPlayer={setPlayer}
               />
             </div>
             <Controls />
@@ -103,9 +115,17 @@ export default function Tempo(props: TempoProps) {
         </div>
         <div className="col-12 col-md-9">
           {!recommendations ? (
-            <SpotifyData data={data} currently_playing={current_track} />
+            <SpotifyData
+              data={data}
+              currently_playing={current_track}
+              playTrack={updatePlayingSong}
+            />
           ) : (
-            <SpotifyData data={data} />
+            <SpotifyData
+              data={data}
+              currently_playing={current_track}
+              playTrack={updatePlayingSong}
+            />
           )}
         </div>
       </div>

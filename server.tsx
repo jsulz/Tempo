@@ -14,6 +14,7 @@ import {
   getUsersTopArtist,
   getUsersTopTracks,
   getRecommendations,
+  playTrack,
 } from "./utils/spotifyclient.ts";
 import { User, Tokens } from "./utils/types.ts";
 import { setUser, getUserBySession } from "./utils/db.ts";
@@ -158,6 +159,23 @@ api.get("/recommendations", async (context) => {
     ? await getRecommendations(access_token, seeds)
     : undefined;
   return context.json(recommendations);
+});
+
+api.get("/play", async (context) => {
+  const tokens = await tokenHelper(context);
+  const access_token = tokens ? tokens.access_token : undefined;
+
+  if (!access_token) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const { track_uri } = context.req.query();
+  console.log(track_uri);
+  const status = access_token
+    ? await playTrack(access_token, track_uri)
+    : undefined;
+  console.log(status);
+  return context.json(status);
 });
 
 server.route("/api", api);

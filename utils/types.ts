@@ -58,6 +58,7 @@ export interface TrackObj {
   id: string;
   name: string;
   external_urls?: ExternalURLs;
+  uri?: string;
 }
 
 export interface TopTracks {
