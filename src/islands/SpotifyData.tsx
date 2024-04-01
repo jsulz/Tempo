@@ -20,7 +20,7 @@ export default function SpotifyData({
 
   const handleTrackClick = (e, track) => {
     e.preventDefault();
-    if (playing) {
+    if (playing && currently_playing.uri == track.uri) {
       setPlaying(false);
     } else {
       setPlaying(true);
