@@ -15,7 +15,11 @@ import { load } from "std/dotenv/mod.ts";
 
 await load({ export: true });
 
-// get new access token
+/**
+ * Retrieves the Spotify user information using the provided access token.
+ * @param token - The access token for authenticating the request.
+ * @returns A promise that resolves to the SpotifyUser object containing the user information.
+ */
 export async function getSpotifyUser(token: string): Promise<SpotifyUser> {
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -24,7 +28,11 @@ export async function getSpotifyUser(token: string): Promise<SpotifyUser> {
   return resp.json();
 }
 
-// Get users top artists
+/**
+ * Retrieves the user's top artists from Spotify API.
+ * @param token - The access token for authentication.
+ * @returns A promise that resolves to an object containing the user's top artists.
+ */
 export async function getUsersTopArtist(token: string): Promise<TopArtists> {
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -47,7 +55,11 @@ export async function getUsersTopArtist(token: string): Promise<TopArtists> {
   return resp;
 }
 
-// Get users top tracks
+/**
+ * Retrieves the user's top tracks from Spotify API.
+ * @param token - The access token for authentication.
+ * @returns A promise that resolves to an object containing the user's top tracks.
+ */
 export async function getUsersTopTracks(token: string): Promise<TopTracks> {
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -79,7 +91,12 @@ export async function getUsersTopTracks(token: string): Promise<TopTracks> {
   return resp;
 }
 
-// Get recommendations for a user
+/**
+ * Retrieves recommendations from Spotify based on the provided seeds.
+ * @param token - The access token for authenticating the request.
+ * @param seeds - The seeds used to generate the recommendations.
+ * @returns A Promise that resolves to an object containing the recommended tracks.
+ */
 export async function getRecommendations(
   token: string,
   seeds: Seeds
@@ -116,6 +133,12 @@ export async function getRecommendations(
   return resp;
 }
 
+/**
+ * Plays a track on Spotify.
+ * @param token - The access token for authentication.
+ * @param track_uri - The URI of the track to be played.
+ * @returns A promise that resolves to a string representing the response from the Spotify API.
+ */
 export async function playTrack(
   token: string,
   track_uri: string
@@ -134,6 +157,11 @@ export async function playTrack(
   return response.text();
 }
 
+/**
+ * Refreshes the access tokens for Spotify API.
+ * @param tokens - The current access tokens.
+ * @returns A promise that resolves to the updated access tokens.
+ */
 export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
   const url = refreshSchema;
 
