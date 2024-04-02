@@ -96,33 +96,37 @@ export default function Tempo(props: TempoProps) {
       <div className="row mt-3">
         <div className="col-12 col-md-3 mt-5 sticky-top">
           <div className="row row-cols-4 row-cols-md-1 sticky-top">
-            <div className="col mt-5">
-              <p>
-                <a href="/log-out">Sign Out</a>
-              </p>
+            <div className="d-flex flex-column align-items-start">
+              <div className="col">
+                <Player
+                  tokens={props.tokens}
+                  current_track={current_track}
+                  setTrack={setTrack}
+                  player={player}
+                  setPlayer={setPlayer}
+                />
+              </div>
+              <Controls />
             </div>
-            <div className="col">
-              <Player
-                tokens={props.tokens}
-                current_track={current_track}
-                setTrack={setTrack}
-                player={player}
-                setPlayer={setPlayer}
-              />
+            <div className="d-flex flex-column align-items-end">
+              <div className="flex-column mt-auto">
+                <p>
+                  <a href="/log-out">Sign Out</a>
+                </p>
+              </div>
             </div>
-            <Controls />
           </div>
         </div>
         <div className="col-12 col-md-9">
           {!recommendations ? (
             <SpotifyData
-              data={data}
+              spotifyData={data}
               currently_playing={current_track}
               playTrack={updatePlayingSong}
             />
           ) : (
             <SpotifyData
-              data={data}
+              spotifyData={data}
               currently_playing={current_track}
               playTrack={updatePlayingSong}
             />

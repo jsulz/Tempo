@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TrackObj } from "../../utils/types.ts";
+import Heading from "../components/Heading.tsx";
 
 /**
  * Renders Spotify data from the provided data object prop.
@@ -8,13 +9,13 @@ import { TrackObj } from "../../utils/types.ts";
  * For other properties, renders items in a grid with image and name.
  */
 export default function SpotifyData({
-  data,
+  spotifyData,
   currently_playing,
   playTrack,
 }: {
-  data: any;
+  spotifyData: any;
   currently_playing: TrackObj;
-  playTrack: (track_uri: string) => void;
+  playTrack: (track: TrackObj) => void;
 }) {
   const [playing, setPlaying] = useState(false);
 
@@ -27,15 +28,16 @@ export default function SpotifyData({
     }
     playTrack(track);
   };
+
   const html: JSX.Element[] = [];
-  if (data) {
-    console.log(data);
-    data.forEach((element) => {
-      for (const property in element) {
+  if (spotifyData) {
+    spotifyData.forEach((spotifyCollection) => {
+      for (const property in spotifyCollection) {
         const heading = (
-          <div className="row" key={property.toUpperCase()}>
-            <h2>{property.toUpperCase()}</h2>
-          </div>
+          <Heading
+            headingText={property.toUpperCase()}
+            key={property.toUpperCase()}
+          />
         );
         html.push(heading);
         if (property == "tracks") {
@@ -44,7 +46,7 @@ export default function SpotifyData({
               className="row row-cols-2 row-cols-sm-4 row-cols-lg-5"
               key={`${property.toUpperCase()}-items`}
             >
-              {element[property].map((item) => {
+              {spotifyCollection[property].map((item) => {
                 let icon = null;
                 const play = <i className="bi bi-play-circle"></i>;
                 const pause = <i className="bi bi-pause-circle"></i>;
@@ -89,7 +91,7 @@ export default function SpotifyData({
           );
           html.push(final);
         } else {
-          const column_els = element[property].map((item) => {
+          const column_els = spotifyCollection[property].map((item) => {
             return (
               <div className="col" key={item.id}>
                 <img className="img-fluid" src={item.images[1].url} />
@@ -115,7 +117,7 @@ export default function SpotifyData({
   }
   return (
     <>
-      {data && (
+      {spotifyData && (
         <>
           {html.map((item: JSX.Element) => {
             return item;
