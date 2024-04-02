@@ -57,7 +57,12 @@ export default function SpotifyData({
           );
           html.push(tracks);
         } else {
-          const artists = <Artists artists={spotifyCollection[property]} />;
+          const artists = (
+            <Artists
+              artists={spotifyCollection[property]}
+              key={`${property.toUpperCase()}-items`}
+            />
+          );
           html.push(artists);
         }
       }
