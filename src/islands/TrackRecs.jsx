@@ -1,3 +1,3 @@
-export default function TrackRecs({...}) {
+export default function TrackRecs() {
   return <></>;
 }
