@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TrackObj } from "../../utils/types.ts";
 import Heading from "../components/Heading.tsx";
 import Tracks from "./Tracks.tsx";
+import Artists from "./Artists.tsx";
 
 /**
  * Renders Spotify data from the provided data object prop.
@@ -53,26 +54,8 @@ export default function SpotifyData({
           );
           html.push(tracks);
         } else {
-          const column_els = spotifyCollection[property].map((item) => {
-            return (
-              <div className="col" key={item.id}>
-                <img className="img-fluid" src={item.images[1].url} />
-                <p>
-                  <a href={item.external_urls.spotify}>{item.name}</a>
-                </p>
-                <p>{item.genres.map((genre) => genre).join(", ")}</p>
-              </div>
-            );
-          });
-          const final = (
-            <div
-              className="row row-cols-2 row-cols-sm-4 row-cols-lg-5"
-              key={`${property.toUpperCase()}-items`}
-            >
-              {column_els.map((item) => item)}
-            </div>
-          );
-          html.push(final);
+          const artists = <Artists artists={spotifyCollection[property]} />;
+          html.push(artists);
         }
       }
     });
