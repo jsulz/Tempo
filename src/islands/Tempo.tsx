@@ -94,27 +94,20 @@ export default function Tempo(props: TempoProps) {
   return (
     <main role="main">
       <div className="row mt-3">
-        <div className="col-12 col-md-3 mt-5 sticky-top">
+        <div className="col-12 col-md-3 mt-5 sticky-top vh-100">
           <div className="row row-cols-4 row-cols-md-1 sticky-top">
-            <div className="d-flex flex-column align-items-start">
-              <div className="col">
-                <Player
-                  tokens={props.tokens}
-                  current_track={current_track}
-                  setTrack={setTrack}
-                  player={player}
-                  setPlayer={setPlayer}
-                />
-              </div>
-              <Controls />
+            <div className="col mt-5">
+              <Player
+                tokens={props.tokens}
+                current_track={current_track}
+                setTrack={setTrack}
+                player={player}
+                setPlayer={setPlayer}
+              />
             </div>
-            <div className="d-flex flex-column align-items-end">
-              <div className="flex-column mt-auto">
-                <p>
-                  <a href="/log-out">Sign Out</a>
-                </p>
-              </div>
-            </div>
+            <p className="mt-auto">
+              <a href="/log-out">Sign Out</a>
+            </p>
           </div>
         </div>
         <div className="col-12 col-md-9">
@@ -131,6 +124,7 @@ export default function Tempo(props: TempoProps) {
               playTrack={updatePlayingSong}
             />
           )}
+          <Controls />
         </div>
       </div>
     </main>
