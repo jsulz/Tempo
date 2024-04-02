@@ -1,10 +1,12 @@
-import { TrackObj } from "../../utils/types.ts"; // Add import statement for TrackObj type
+import { TrackObj, RecommendationSettings } from "../../utils/types.ts"; // Add import statement for RecommendationSettings type
 
 export default function Tracks({
   tracks,
   playing,
   currentlyPlaying,
   handleTrackPlaying,
+  recommendationSettings,
+  updateRecommendationTracks,
 }: {
   tracks: TrackObj[];
   playing: boolean;
@@ -13,7 +15,23 @@ export default function Tracks({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     track: TrackObj
   ) => void;
+  recommendationSettings: RecommendationSettings;
+  updateRecommendationTracks: (recommendations: RecommendationSettings) => void;
 }) {
+  const handleAddingTrack = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    track: TrackObj
+  ): void => {
+    e.preventDefault();
+    if (recommendationSettings.seed_tracks.includes(track.uri!)) {
+      const index = recommendationSettings.seed_tracks.indexOf(track.uri!);
+      recommendationSettings.seed_tracks.splice(index, 1);
+    } else {
+      recommendationSettings.seed_tracks.push(track.uri!);
+    }
+    updateRecommendationTracks(recommendationSettings);
+  };
+
   const trackCards = tracks.map((track) => {
     let icon = null;
     const play = <i className="bi bi-play-circle"></i>;
@@ -22,6 +40,15 @@ export default function Tracks({
       icon = playing ? pause : play;
     } else {
       icon = play;
+    }
+
+    let recIcon = null;
+    const add = <i className="bi bi-plus-circle"></i>;
+    const remove = <i className="bi bi-dash-circle"></i>;
+    if (recommendationSettings.seed_tracks.includes(track.uri!)) {
+      recIcon = remove;
+    } else {
+      recIcon = add;
     }
     return (
       <div className="col" key={track.id}>
@@ -48,6 +75,12 @@ export default function Tracks({
           onClick={(e) => handleTrackPlaying(e, track)}
         >
           {icon}
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={(e) => handleAddingTrack(e, track)}
+        >
+          {recIcon}
         </button>
       </div>
     );

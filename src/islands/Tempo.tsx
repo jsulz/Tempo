@@ -109,10 +109,20 @@ export default function Tempo(props: TempoProps) {
     }
   };
 
+  // @TODO: Move both of these down into their respective components; I don't need to muck things up here
   const updateRecommendationSettings = (attribute: string, value: number) => {
     setRecommendationSettings({
       ...recommendationSettings,
       [attribute]: value,
+    });
+  };
+
+  const updateRecommendationTracks = (
+    recommendations: RecommendationSettings
+  ) => {
+    setRecommendationSettings({
+      ...recommendations,
+      seed_tracks: recommendations.seed_tracks,
     });
   };
 
@@ -141,12 +151,16 @@ export default function Tempo(props: TempoProps) {
               spotifyData={data}
               currently_playing={current_track}
               playTrack={updatePlayingSong}
+              recommendationSettings={recommendationSettings}
+              updateRecommendationTracks={updateRecommendationTracks}
             />
           ) : (
             <SpotifyData
               spotifyData={data}
               currently_playing={current_track}
               playTrack={updatePlayingSong}
+              recommendationSettings={recommendationSettings}
+              updateRecommendationTracks={updateRecommendationTracks}
             />
           )}
           <Controls

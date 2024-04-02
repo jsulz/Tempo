@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TrackObj } from "../../utils/types.ts";
+import { RecommendationSettings, TrackObj } from "../../utils/types.ts";
 import Heading from "../components/Heading.tsx";
 import Tracks from "./Tracks.tsx";
 import Artists from "./Artists.tsx";
@@ -14,10 +14,14 @@ export default function SpotifyData({
   spotifyData,
   currently_playing,
   playTrack,
+  recommendationSettings,
+  updateRecommendationTracks,
 }: {
   spotifyData: any;
   currently_playing: TrackObj;
   playTrack: (track: TrackObj) => void;
+  recommendationSettings: RecommendationSettings;
+  updateRecommendationTracks: (recommendations: RecommendationSettings) => void;
 }) {
   const [playing, setPlaying] = useState(false);
 
@@ -53,6 +57,8 @@ export default function SpotifyData({
               currentlyPlaying={currently_playing}
               handleTrackPlaying={handleTrackClick}
               key={`${property.toUpperCase()}-items`}
+              recommendationSettings={recommendationSettings}
+              updateRecommendationTracks={updateRecommendationTracks}
             />
           );
           html.push(tracks);
