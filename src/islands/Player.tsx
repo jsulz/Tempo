@@ -30,7 +30,6 @@ export default function Player({
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
 
-  console.log(current_track);
   const track_image = current_track.album.images.filter(
     (image) => image.height === 64
   );
@@ -66,7 +65,6 @@ export default function Player({
         fetch("https://api.spotify.com/v1/me/player", options)
           .then((response) => response.text())
           .then((data) => {
-            console.log(data);
             console.log(`Playing on device ${device_id}`);
           });
       });

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Player from "./Player.tsx";
 import Controls from "./Controls.tsx";
 import SpotifyData from "./SpotifyData.tsx";
-import { Tokens, TrackObj } from "../../utils/types.ts";
+import { Tokens, TrackObj, RecommendationSettings } from "../../utils/types.ts";
 
 interface TempoProps {
   start: number;
@@ -32,6 +32,23 @@ const track: TrackObj = {
   ],
 };
 
+const defaultSettings: RecommendationSettings = {
+  limit: 30,
+  seed_artists: [],
+  seed_genres: [],
+  seed_tracks: [],
+  acousticness: null,
+  danceability: null,
+  energy: null,
+  instrumentalness: null,
+  liveness: null,
+  loudness: null,
+  popularity: null,
+  speechiness: null,
+  tempo: null,
+  valence: null,
+};
+
 export default function Tempo(props: TempoProps) {
   // If we don't have recommendations, then we should show getrecommendations and get info from Spofity
   // If we do have recommendations, then we should show buildplaylist and let the user create the playlist in spotify
@@ -40,6 +57,8 @@ export default function Tempo(props: TempoProps) {
   const [topArtists, setTopArtists] = useState(null);
   const [current_track, setTrack] = useState(track);
   const [player, setPlayer] = useState(undefined);
+  const [recommendationSettings, setRecommendationSettings] =
+    useState(defaultSettings);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +78,7 @@ export default function Tempo(props: TempoProps) {
   } else if (recommendations !== null) {
     data = [recommendations];
   }
-
+  console.log(recommendationSettings);
   /*
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -79,7 +98,6 @@ export default function Tempo(props: TempoProps) {
   */
 
   const updatePlayingSong = async (track: TrackObj) => {
-    console.log(track.uri, current_track.uri);
     if (track.uri === current_track.uri) {
       player.togglePlay();
     } else {
@@ -89,6 +107,13 @@ export default function Tempo(props: TempoProps) {
       };
       play();
     }
+  };
+
+  const updateRecommendationSettings = (attribute: string, value: number) => {
+    setRecommendationSettings({
+      ...recommendationSettings,
+      [attribute]: value,
+    });
   };
 
   return (
@@ -124,7 +149,10 @@ export default function Tempo(props: TempoProps) {
               playTrack={updatePlayingSong}
             />
           )}
-          <Controls />
+          <Controls
+            recommendationSettings={recommendationSettings}
+            updateRecommendationSettings={updateRecommendationSettings}
+          />
         </div>
       </div>
     </main>

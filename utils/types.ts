@@ -73,3 +73,20 @@ export interface Seeds {
   seed_songs: string;
   seed_artists: string;
 }
+
+export interface RecommendationSettings {
+  limit: number;
+  seed_artists: Array<string>;
+  seed_genres: Array<string>;
+  seed_tracks: Array<string>;
+  acousticness: number | null;
+  danceability: number | null;
+  energy: number | null;
+  instrumentalness: number | null;
+  liveness: number | null;
+  loudness: number | null;
+  popularity: number | null;
+  speechiness: number | null;
+  tempo: number | null;
+  valence: number | null;
+}
