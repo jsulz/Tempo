@@ -21,7 +21,10 @@ export default function SpotifyData({
 }) {
   const [playing, setPlaying] = useState(false);
 
-  const handleTrackClick = (e, track) => {
+  const handleTrackClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    track: TrackObj
+  ): void => {
     e.preventDefault();
     if (playing && currently_playing.uri == track.uri) {
       setPlaying(false);
@@ -33,7 +36,7 @@ export default function SpotifyData({
 
   const html: JSX.Element[] = [];
   if (spotifyData) {
-    spotifyData.forEach((spotifyCollection) => {
+    spotifyData.forEach((spotifyCollection: any) => {
       for (const property in spotifyCollection) {
         const heading = (
           <Heading
