@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Player from "./Player.tsx";
 import Controls from "./Controls.tsx";
 import SpotifyData from "./SpotifyData.tsx";
+import RecommendationSettingsView from "./RecommendationSettingsView.tsx";
 import { Tokens, TrackObj, RecommendationSettings } from "../../utils/types.ts";
 
 interface TempoProps {
@@ -47,6 +48,7 @@ const defaultSettings: RecommendationSettings = {
   speechiness: null,
   tempo: null,
   valence: null,
+  seed_count: 0,
 };
 
 export default function Tempo(props: TempoProps) {
@@ -78,7 +80,7 @@ export default function Tempo(props: TempoProps) {
   } else if (recommendations !== null) {
     data = [recommendations];
   }
-  console.log(recommendationSettings);
+  console.log(recommendations);
   /*
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -112,9 +114,9 @@ export default function Tempo(props: TempoProps) {
   return (
     <main role="main">
       <div className="row mt-3">
-        <div className="col-12 col-md-3 mt-5 sticky-top vh-100">
+        <div className="col-12 col-md-3 mt-5 sticky-top">
           <div className="row row-cols-4 row-cols-md-1 sticky-top">
-            <div className="col mt-5">
+            <div className="col">
               <Player
                 tokens={props.tokens}
                 current_track={current_track}
@@ -123,20 +125,34 @@ export default function Tempo(props: TempoProps) {
                 setPlayer={setPlayer}
               />
             </div>
-            <p className="mt-auto">
-              <a href="/log-out">Sign Out</a>
-            </p>
+            {!recommendations && (
+              <RecommendationSettingsView
+                recommendationSettings={recommendationSettings}
+                setRecommendations={setRecommendations}
+              />
+            )}
+            <div className="col">
+              <p>
+                <a href="/log-out">Sign Out</a>
+              </p>
+            </div>
           </div>
         </div>
         <div className="col-12 col-md-9">
           {!recommendations ? (
-            <SpotifyData
-              spotifyData={data}
-              currently_playing={current_track}
-              playTrack={updatePlayingSong}
-              recommendationSettings={recommendationSettings}
-              setRecommendationSettings={setRecommendationSettings}
-            />
+            <>
+              <SpotifyData
+                spotifyData={data}
+                currently_playing={current_track}
+                playTrack={updatePlayingSong}
+                recommendationSettings={recommendationSettings}
+                setRecommendationSettings={setRecommendationSettings}
+              />
+              <Controls
+                recommendationSettings={recommendationSettings}
+                setRecommendationSettings={setRecommendationSettings}
+              />
+            </>
           ) : (
             <SpotifyData
               spotifyData={data}
@@ -146,10 +162,6 @@ export default function Tempo(props: TempoProps) {
               setRecommendationSettings={setRecommendationSettings}
             />
           )}
-          <Controls
-            recommendationSettings={recommendationSettings}
-            setRecommendationSettings={setRecommendationSettings}
-          />
         </div>
       </div>
     </main>

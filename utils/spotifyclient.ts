@@ -105,14 +105,11 @@ export async function getRecommendations(
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  const params = new URLSearchParams({
-    seed_artists: seeds.seed_artists,
-    seed_songs: seeds.seed_songs,
-  });
+  const params = new URLSearchParams(seeds);
   const data = await (
     await fetch(`${spotifySchema}/recommendations?${params}`, { headers })
   ).json();
-  console.log(data);
+
   const resp: Recommendations = { tracks: [] };
   data.tracks.forEach((recommendation: TrackObj) => {
     const album: AlbumObj = {
@@ -120,14 +117,17 @@ export async function getRecommendations(
       images: recommendation.album.images,
       release_date: recommendation.album.release_date,
       artists: recommendation.album.artists,
+      external_urls: recommendation.album.external_urls,
     };
     resp.tracks.push({
-      album: album,
-      name: recommendation.name,
       id: recommendation.id,
+      name: recommendation.name,
+      album: album,
       artists: recommendation.artists,
       duration: recommendation.duration,
       popularity: recommendation.popularity,
+      external_urls: recommendation.external_urls,
+      uri: recommendation.uri,
     });
   });
 

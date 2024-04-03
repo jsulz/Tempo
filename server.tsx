@@ -16,7 +16,7 @@ import {
   getRecommendations,
   playTrack,
 } from "./utils/spotifyclient.ts";
-import { User, Tokens } from "./utils/types.ts";
+import { User, Tokens, Seeds } from "./utils/types.ts";
 import { setUser, getUserBySession } from "./utils/db.ts";
 import App from "./src/app.tsx";
 import { getTokensByUser } from "./utils/db.ts";
@@ -149,11 +149,13 @@ api.get("/recommendations", async (context) => {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const { seed_artists, seed_songs } = context.req.query();
-  const seeds = {
-    seed_artists: seed_artists,
-    seed_songs: seed_songs,
-  };
+  const seedQuery = context.req.query();
+  const seeds: Seeds = {};
+  for (const key in seedQuery) {
+    seeds[key] = seedQuery[key];
+  }
+
+  console.log(seeds);
 
   const recommendations = access_token
     ? await getRecommendations(access_token, seeds)

@@ -25,15 +25,18 @@ export default function Tracks({
     track: TrackObj
   ): void => {
     e.preventDefault();
-    if (recommendationSettings.seed_tracks.includes(track.uri!)) {
-      const index = recommendationSettings.seed_tracks.indexOf(track.uri!);
+    if (recommendationSettings.seed_tracks.includes(track.id!)) {
+      const index = recommendationSettings.seed_tracks.indexOf(track.id!);
       recommendationSettings.seed_tracks.splice(index, 1);
+      recommendationSettings.seed_count -= 1;
     } else {
-      recommendationSettings.seed_tracks.push(track.uri!);
+      recommendationSettings.seed_tracks.push(track.id!);
+      recommendationSettings.seed_count += 1;
     }
     setRecommendationSettings({
       ...recommendationSettings,
       seed_tracks: recommendationSettings.seed_tracks,
+      seed_count: recommendationSettings.seed_count,
     });
   };
 
@@ -50,10 +53,14 @@ export default function Tracks({
     let recIcon = null;
     const add = <i className="bi bi-plus-circle"></i>;
     const remove = <i className="bi bi-dash-circle"></i>;
-    if (recommendationSettings.seed_tracks.includes(track.uri!)) {
+    let disabled = false;
+    if (recommendationSettings.seed_tracks.includes(track.id!)) {
       recIcon = remove;
     } else {
       recIcon = add;
+      if (recommendationSettings.seed_count >= 5) {
+        disabled = true;
+      }
     }
     return (
       <div className="col" key={track.id}>
@@ -84,6 +91,7 @@ export default function Tracks({
         <button
           className="btn btn-primary"
           onClick={(e) => handleAddingTrack(e, track)}
+          disabled={disabled}
         >
           {recIcon}
         </button>

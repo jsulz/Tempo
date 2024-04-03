@@ -71,12 +71,27 @@ export interface Recommendations {
 }
 
 export interface Seeds {
-  seed_songs: string;
-  seed_artists: string;
+  [key: string]: number | string | null | undefined;
+  limit?: number;
+  seed_artists?: string;
+  seed_genres?: string;
+  seed_tracks?: string;
+  acousticness?: number | null;
+  danceability?: number | null;
+  energy?: number | null;
+  instrumentalness?: number | null;
+  liveness?: number | null;
+  loudness?: number | null;
+  popularity?: number | null;
+  speechiness?: number | null;
+  tempo?: number | null;
+  valence?: number | null;
 }
 
 export interface RecommendationSettings {
+  [key: string]: number | null | Array<string>;
   limit: number;
+  seed_count: number;
   seed_artists: Array<string>;
   seed_genres: Array<string>;
   seed_tracks: Array<string>;
@@ -90,4 +105,9 @@ export interface RecommendationSettings {
   speechiness: number | null;
   tempo: number | null;
   valence: number | null;
+}
+
+export interface SpotifySeeds {
+  uri: string;
+  name: string;
 }

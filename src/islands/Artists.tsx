@@ -16,15 +16,18 @@ export default function Artists({
     artist: ArtistObj
   ): void => {
     e.preventDefault();
-    if (recommendationSettings.seed_artists.includes(artist.uri!)) {
-      const index = recommendationSettings.seed_tracks.indexOf(artist.uri!);
+    if (recommendationSettings.seed_artists.includes(artist.id!)) {
+      const index = recommendationSettings.seed_tracks.indexOf(artist.id!);
       recommendationSettings.seed_artists.splice(index, 1);
+      recommendationSettings.seed_count -= 1;
     } else {
-      recommendationSettings.seed_artists.push(artist.uri!);
+      recommendationSettings.seed_artists.push(artist.id!);
+      recommendationSettings.seed_count += 1;
     }
     setRecommendationSettings({
       ...recommendationSettings,
       seed_artists: recommendationSettings.seed_artists,
+      seed_count: recommendationSettings.seed_count,
     });
   };
 
@@ -32,10 +35,14 @@ export default function Artists({
     let recIcon = null;
     const add = <i className="bi bi-plus-circle"></i>;
     const remove = <i className="bi bi-dash-circle"></i>;
-    if (recommendationSettings.seed_artists.includes(artist.uri!)) {
+    let disabled = false;
+    if (recommendationSettings.seed_artists.includes(artist.id!)) {
       recIcon = remove;
     } else {
       recIcon = add;
+      if (recommendationSettings.seed_count >= 5) {
+        disabled = true;
+      }
     }
     return (
       <div className="col" key={artist.id}>
@@ -47,6 +54,7 @@ export default function Artists({
         <button
           className="btn btn-primary"
           onClick={(e) => handleAddingArtist(e, artist)}
+          disabled={disabled}
         >
           {recIcon}
         </button>
