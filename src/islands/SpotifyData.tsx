@@ -69,6 +69,8 @@ export default function SpotifyData({
             <Artists
               artists={spotifyCollection[property]}
               key={`${property.toUpperCase()}-items`}
+              recommendationSettings={recommendationSettings}
+              setRecommendationSettings={setRecommendationSettings}
             />
           );
           html.push(artists);

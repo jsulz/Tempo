@@ -49,6 +49,7 @@ export async function getUsersTopArtist(token: string): Promise<TopArtists> {
       genres: artist.genres,
       popularity: artist.popularity,
       external_urls: artist.external_urls,
+      uri: artist.uri,
     });
   });
   console.log(data.items[0]);

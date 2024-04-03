@@ -36,6 +36,7 @@ export interface ArtistObj {
   images: Array<ImageObject>;
   popularity: number;
   external_urls?: ExternalURLs;
+  uri?: string;
 }
 
 export interface TopArtists {
