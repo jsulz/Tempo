@@ -15,13 +15,15 @@ export default function SpotifyData({
   currently_playing,
   playTrack,
   recommendationSettings,
-  updateRecommendationTracks,
+  setRecommendationSettings,
 }: {
   spotifyData: any;
   currently_playing: TrackObj;
   playTrack: (track: TrackObj) => void;
   recommendationSettings: RecommendationSettings;
-  updateRecommendationTracks: (recommendations: RecommendationSettings) => void;
+  setRecommendationSettings: React.Dispatch<
+    React.SetStateAction<RecommendationSettings>
+  >;
 }) {
   const [playing, setPlaying] = useState(false);
 
@@ -58,7 +60,7 @@ export default function SpotifyData({
               handleTrackPlaying={handleTrackClick}
               key={`${property.toUpperCase()}-items`}
               recommendationSettings={recommendationSettings}
-              updateRecommendationTracks={updateRecommendationTracks}
+              setRecommendationSettings={setRecommendationSettings}
             />
           );
           html.push(tracks);

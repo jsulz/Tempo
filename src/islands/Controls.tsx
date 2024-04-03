@@ -3,10 +3,12 @@ import Control from "./Control.tsx";
 
 export default function Controls({
   recommendationSettings,
-  updateRecommendationSettings,
+  setRecommendationSettings,
 }: {
   recommendationSettings: RecommendationSettings;
-  updateRecommendationSettings: (attribute: string, value: number) => void;
+  setRecommendationSettings: React.Dispatch<
+    React.SetStateAction<RecommendationSettings>
+  >;
 }) {
   const attributes = [
     "acousticness",
@@ -20,13 +22,18 @@ export default function Controls({
     "tempo",
     "valence",
   ];
+
   const updateAttribute = (
     e: React.ChangeEvent<HTMLInputElement>,
     attribute: string
   ) => {
     const value = parseInt(e.target.value) / 100;
-    updateRecommendationSettings(attribute, value);
+    setRecommendationSettings({
+      ...recommendationSettings,
+      [attribute]: value,
+    });
   };
+
   return (
     <div className="row row-cols-1 row-cols-md-2">
       <div className="col mb-3 p-0 pe-md-4">

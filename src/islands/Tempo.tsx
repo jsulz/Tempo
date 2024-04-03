@@ -109,23 +109,6 @@ export default function Tempo(props: TempoProps) {
     }
   };
 
-  // @TODO: Move both of these down into their respective components; I don't need to muck things up here
-  const updateRecommendationSettings = (attribute: string, value: number) => {
-    setRecommendationSettings({
-      ...recommendationSettings,
-      [attribute]: value,
-    });
-  };
-
-  const updateRecommendationTracks = (
-    recommendations: RecommendationSettings
-  ) => {
-    setRecommendationSettings({
-      ...recommendations,
-      seed_tracks: recommendations.seed_tracks,
-    });
-  };
-
   return (
     <main role="main">
       <div className="row mt-3">
@@ -152,7 +135,7 @@ export default function Tempo(props: TempoProps) {
               currently_playing={current_track}
               playTrack={updatePlayingSong}
               recommendationSettings={recommendationSettings}
-              updateRecommendationTracks={updateRecommendationTracks}
+              setRecommendationSettings={setRecommendationSettings}
             />
           ) : (
             <SpotifyData
@@ -160,12 +143,12 @@ export default function Tempo(props: TempoProps) {
               currently_playing={current_track}
               playTrack={updatePlayingSong}
               recommendationSettings={recommendationSettings}
-              updateRecommendationTracks={updateRecommendationTracks}
+              setRecommendationSettings={setRecommendationSettings}
             />
           )}
           <Controls
             recommendationSettings={recommendationSettings}
-            updateRecommendationSettings={updateRecommendationSettings}
+            setRecommendationSettings={setRecommendationSettings}
           />
         </div>
       </div>

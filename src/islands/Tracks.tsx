@@ -6,7 +6,7 @@ export default function Tracks({
   currentlyPlaying,
   handleTrackPlaying,
   recommendationSettings,
-  updateRecommendationTracks,
+  setRecommendationSettings,
 }: {
   tracks: TrackObj[];
   playing: boolean;
@@ -16,7 +16,9 @@ export default function Tracks({
     track: TrackObj
   ) => void;
   recommendationSettings: RecommendationSettings;
-  updateRecommendationTracks: (recommendations: RecommendationSettings) => void;
+  setRecommendationSettings: React.Dispatch<
+    React.SetStateAction<RecommendationSettings>
+  >;
 }) {
   const handleAddingTrack = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -29,7 +31,10 @@ export default function Tracks({
     } else {
       recommendationSettings.seed_tracks.push(track.uri!);
     }
-    updateRecommendationTracks(recommendationSettings);
+    setRecommendationSettings({
+      ...recommendationSettings,
+      seed_tracks: recommendationSettings.seed_tracks,
+    });
   };
 
   const trackCards = tracks.map((track) => {
