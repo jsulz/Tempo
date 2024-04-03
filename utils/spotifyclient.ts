@@ -105,12 +105,14 @@ export async function getRecommendations(
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  const params = new URLSearchParams(seeds);
+  const params = new URLSearchParams(
+    Object.entries(seeds).map(([key, value]) => [key, String(value)])
+  );
   const data = await (
     await fetch(`${spotifySchema}/recommendations?${params}`, { headers })
   ).json();
 
-  const resp: Recommendations = { tracks: [] };
+  const resp: Recommendations = { trackrecs: [] };
   data.tracks.forEach((recommendation: TrackObj) => {
     const album: AlbumObj = {
       name: recommendation.album.name,
@@ -119,7 +121,7 @@ export async function getRecommendations(
       artists: recommendation.album.artists,
       external_urls: recommendation.album.external_urls,
     };
-    resp.tracks.push({
+    resp.trackrecs.push({
       id: recommendation.id,
       name: recommendation.name,
       album: album,

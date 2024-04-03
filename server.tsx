@@ -32,6 +32,8 @@ const spotifyOauthClient = createSpotifyOAuthConfig({
     "user-read-recently-played",
     "streaming",
     "user-modify-playback-state",
+    "playlist-modify-public",
+    "playlist-modify-private",
   ],
 });
 
@@ -154,8 +156,6 @@ api.get("/recommendations", async (context) => {
   for (const key in seedQuery) {
     seeds[key] = seedQuery[key];
   }
-
-  console.log(seeds);
 
   const recommendations = access_token
     ? await getRecommendations(access_token, seeds)

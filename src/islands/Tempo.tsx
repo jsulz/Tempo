@@ -3,7 +3,13 @@ import Player from "./Player.tsx";
 import Controls from "./Controls.tsx";
 import SpotifyData from "./SpotifyData.tsx";
 import RecommendationSettingsView from "./RecommendationSettingsView.tsx";
-import { Tokens, TrackObj, RecommendationSettings } from "../../utils/types.ts";
+import PlaylistSettingsView from "./PlaylistSettingsView.tsx";
+import {
+  Tokens,
+  TrackObj,
+  RecommendationSettings,
+  PlaylistSettings,
+} from "../../utils/types.ts";
 
 interface TempoProps {
   start: number;
@@ -51,9 +57,13 @@ const defaultSettings: RecommendationSettings = {
   seed_count: 0,
 };
 
+const playlistDefaultSettings: PlaylistSettings = {
+  name: "",
+  public: true,
+  tracks: [],
+};
+
 export default function Tempo(props: TempoProps) {
-  // If we don't have recommendations, then we should show getrecommendations and get info from Spofity
-  // If we do have recommendations, then we should show buildplaylist and let the user create the playlist in spotify
   const [recommendations, setRecommendations] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
@@ -61,6 +71,9 @@ export default function Tempo(props: TempoProps) {
   const [player, setPlayer] = useState(undefined);
   const [recommendationSettings, setRecommendationSettings] =
     useState(defaultSettings);
+  const [playlistSettings, setPlaylistSettings] = useState(
+    playlistDefaultSettings
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +93,7 @@ export default function Tempo(props: TempoProps) {
   } else if (recommendations !== null) {
     data = [recommendations];
   }
-  console.log(recommendations);
+  console.log(playlistSettings);
   /*
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -125,10 +138,15 @@ export default function Tempo(props: TempoProps) {
                 setPlayer={setPlayer}
               />
             </div>
-            {!recommendations && (
+            {!recommendations ? (
               <RecommendationSettingsView
                 recommendationSettings={recommendationSettings}
                 setRecommendations={setRecommendations}
+              />
+            ) : (
+              <PlaylistSettingsView
+                playlistSettings={playlistSettings}
+                setPlaylistSettings={setPlaylistSettings}
               />
             )}
             <div className="col">
@@ -158,8 +176,8 @@ export default function Tempo(props: TempoProps) {
               spotifyData={data}
               currently_playing={current_track}
               playTrack={updatePlayingSong}
-              recommendationSettings={recommendationSettings}
-              setRecommendationSettings={setRecommendationSettings}
+              playlistSettings={playlistSettings}
+              setPlaylistSettings={setPlaylistSettings}
             />
           )}
         </div>

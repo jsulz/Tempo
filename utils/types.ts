@@ -67,7 +67,7 @@ export interface TopTracks {
 }
 
 export interface Recommendations {
-  tracks: Array<TrackObj>;
+  trackrecs: Array<TrackObj>;
 }
 
 export interface Seeds {
@@ -105,6 +105,12 @@ export interface RecommendationSettings {
   speechiness: number | null;
   tempo: number | null;
   valence: number | null;
+}
+
+export interface PlaylistSettings {
+  name: string;
+  public: boolean;
+  tracks: Array<TrackObj>;
 }
 
 export interface SpotifySeeds {

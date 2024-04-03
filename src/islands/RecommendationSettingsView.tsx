@@ -10,7 +10,7 @@ export default function RecommendationSettingsView({
   >;
 }) {
   const getRecommendations = async () => {
-    const paramSettings = {};
+    const paramSettings: any = {};
     for (const setting in recommendationSettings) {
       if (
         recommendationSettings[setting] !== null &&
@@ -43,8 +43,8 @@ export default function RecommendationSettingsView({
             <strong>{setting}</strong>
             {Array.isArray(recommendationSettings[setting]) && (
               <ul>
-                {recommendationSettings[setting]!.map((item) => (
-                  <li>{item}</li>
+                {recommendationSettings[setting]!.map((ids) => (
+                  <li key={ids}>{ids}</li>
                 ))}
               </ul>
             )}

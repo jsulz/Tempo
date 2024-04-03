@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { RecommendationSettings, TrackObj } from "../../utils/types.ts";
+import {
+  RecommendationSettings,
+  TrackObj,
+  PlaylistSettings,
+} from "../../utils/types.ts";
 import Heading from "../components/Heading.tsx";
 import Tracks from "./Tracks.tsx";
 import Artists from "./Artists.tsx";
-
+import TrackRecs from "./TrackRecs.tsx";
 /**
  * Renders Spotify data from the provided data object prop.
  * Iterates through each top level property in the data object, rendering a heading.
@@ -16,14 +20,18 @@ export default function SpotifyData({
   playTrack,
   recommendationSettings,
   setRecommendationSettings,
+  playlistSettings,
+  setPlaylistSettings,
 }: {
   spotifyData: any;
   currently_playing: TrackObj;
   playTrack: (track: TrackObj) => void;
-  recommendationSettings: RecommendationSettings;
-  setRecommendationSettings: React.Dispatch<
+  recommendationSettings?: RecommendationSettings;
+  setRecommendationSettings?: React.Dispatch<
     React.SetStateAction<RecommendationSettings>
   >;
+  playlistSettings?: PlaylistSettings;
+  setPlaylistSettings?: React.Dispatch<React.SetStateAction<PlaylistSettings>>;
 }) {
   const [playing, setPlaying] = useState(false);
 
@@ -51,7 +59,11 @@ export default function SpotifyData({
           />
         );
         html.push(heading);
-        if (property == "tracks") {
+        if (
+          property == "tracks" &&
+          recommendationSettings &&
+          setRecommendationSettings
+        ) {
           const tracks = (
             <Tracks
               tracks={spotifyCollection[property]}
@@ -64,7 +76,11 @@ export default function SpotifyData({
             />
           );
           html.push(tracks);
-        } else {
+        } else if (
+          property == "artists" &&
+          setRecommendationSettings &&
+          recommendationSettings
+        ) {
           const artists = (
             <Artists
               artists={spotifyCollection[property]}
@@ -74,6 +90,23 @@ export default function SpotifyData({
             />
           );
           html.push(artists);
+        } else if (
+          property == "trackrecs" &&
+          playlistSettings &&
+          setPlaylistSettings
+        ) {
+          const recs = (
+            <TrackRecs
+              tracks={spotifyCollection[property]}
+              playing={playing}
+              currentlyPlaying={currently_playing}
+              handleTrackPlaying={handleTrackClick}
+              key={`${property.toUpperCase()}-items`}
+              playlistSettings={playlistSettings}
+              setPlaylistSettings={setPlaylistSettings}
+            />
+          );
+          html.push(recs);
         }
       }
     });
