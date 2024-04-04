@@ -8,6 +8,7 @@ import {
   AlbumObj,
   Recommendations,
   Seeds,
+  Playlist,
 } from "./types.ts";
 const spotifySchema = "https://api.spotify.com/v1";
 const refreshSchema = "https://accounts.spotify.com/api/token";
@@ -158,6 +159,56 @@ export async function playTrack(
   const response = await fetch(`${spotifySchema}/me/player/play`, options);
   console.log(response);
   return response.text();
+}
+
+export async function createPlaylist(
+  token: string,
+  playlist_name: string,
+  public_playlist: boolean,
+  user_id: string
+): Promise<Playlist> {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+  const body = {
+    name: playlist_name,
+    public: public_playlist,
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(
+    `${spotifySchema}/users/${user_id}/playlists`,
+    options
+  );
+  return response.json();
+}
+
+export async function addTracksToPlaylist(
+  token: string,
+  playlist_id: string,
+  tracks: Array<string>
+): Promise<string> {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
+  const body = {
+    uris: tracks,
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(
+    `${spotifySchema}/playlists/${playlist_id}/tracks`,
+    options
+  );
+  return response.json();
 }
 
 /**

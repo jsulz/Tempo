@@ -20,6 +20,8 @@ import { User, Tokens, Seeds } from "./utils/types.ts";
 import { setUser, getUserBySession } from "./utils/db.ts";
 import App from "./src/app.tsx";
 import { getTokensByUser } from "./utils/db.ts";
+import { createPlaylist } from "./utils/spotifyclient.ts";
+import { addTracksToPlaylist } from "./utils/spotifyclient.ts";
 
 // Oauth setup
 await load({ export: true });
@@ -178,6 +180,37 @@ api.get("/play", async (context) => {
     : undefined;
   console.log(status);
   return context.json(status);
+});
+
+api.post("/playlist", async (context) => {
+  const tokens = await tokenHelper(context);
+  const access_token = tokens ? tokens.access_token : undefined;
+  const sessionId = await getSessionId(context.req.raw);
+  const user = sessionId ? await getUserBySession(sessionId) : undefined;
+
+  if (!access_token) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const body = await context.req.json();
+  // create a playlist
+  const playlist = await createPlaylist(
+    access_token,
+    body.name,
+    body.public,
+    user.id
+  );
+  // add tracks to playlist
+  const addTracks = await addTracksToPlaylist(
+    access_token,
+    playlist.id,
+    body.tracks
+  );
+  console.log(addTracks);
 });
 
 server.route("/api", api);

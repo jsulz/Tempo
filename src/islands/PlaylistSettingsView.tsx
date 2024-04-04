@@ -19,7 +19,25 @@ export default function PlaylistSettingsView({
       public: !playlistSettings.public,
     });
   };
-  const createPlaylist = async () => {};
+  const createPlaylist = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const trackIds = playlistSettings.tracks.map((track) => track.uri);
+    const body = {
+      name: playlistSettings.name,
+      public: playlistSettings.public,
+      tracks: trackIds,
+    };
+    const createPlaylist = await (
+      await fetch("/api/playlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+    ).json();
+  };
+
   let submittable = false;
   if (playlistSettings.name.length > 0 && playlistSettings.tracks.length > 0) {
     submittable = true;
@@ -63,7 +81,7 @@ export default function PlaylistSettingsView({
       <button
         className="btn btn-primary"
         disabled={!submittable}
-        onClick={createPlaylist}
+        onClick={(e) => createPlaylist(e)}
       >
         GCreate Playlist
       </button>

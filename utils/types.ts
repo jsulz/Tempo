@@ -117,3 +117,9 @@ export interface SpotifySeeds {
   uri: string;
   name: string;
 }
+
+export interface Playlist {
+  id: string;
+  name: string;
+  public: string;
+}
