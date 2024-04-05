@@ -202,15 +202,11 @@ api.post("/playlist", async (context) => {
     access_token,
     body.name,
     body.public,
-    user.id
-  );
-  // add tracks to playlist
-  const addTracks = await addTracksToPlaylist(
-    access_token,
-    playlist.id,
+    user.id,
     body.tracks
   );
-  console.log(addTracks);
+  // add tracks to playlist
+  console.log(playlist);
 });
 
 server.route("/api", api);

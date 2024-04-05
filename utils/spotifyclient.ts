@@ -1,3 +1,4 @@
+import Tracks from "../src/islands/Tracks.tsx";
 import {
   TopArtists,
   SpotifyUser,
@@ -165,7 +166,8 @@ export async function createPlaylist(
   token: string,
   playlist_name: string,
   public_playlist: boolean,
-  user_id: string
+  user_id: string,
+  tracks: Array<string>
 ): Promise<Playlist> {
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -174,6 +176,7 @@ export async function createPlaylist(
   const body = {
     name: playlist_name,
     public: public_playlist,
+    tracks: tracks,
   };
   const options = {
     method: "POST",
