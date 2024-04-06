@@ -22,6 +22,7 @@ import App from "./src/app.tsx";
 import { getTokensByUser } from "./utils/db.ts";
 import { createPlaylist } from "./utils/spotifyclient.ts";
 import { addTracksToPlaylist } from "./utils/spotifyclient.ts";
+import { getPlaylist } from "./utils/spotifyclient.ts";
 
 // Oauth setup
 await load({ export: true });
@@ -202,11 +203,17 @@ api.post("/playlist", async (context) => {
     access_token,
     body.name,
     body.public,
-    user.id,
+    user.id
+  );
+  // add tracks to playlist through spotifyclient
+  const tracks = await addTracksToPlaylist(
+    access_token,
+    playlist.id,
     body.tracks
   );
-  // add tracks to playlist
-  console.log(playlist);
+  // Get the final playlist from Spotify
+  const finalPlaylist = await getPlaylist(access_token, playlist.id);
+  return context.json(finalPlaylist);
 });
 
 server.route("/api", api);

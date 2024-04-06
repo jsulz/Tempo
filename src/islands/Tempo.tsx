@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Player from "./Player.tsx";
 import Controls from "./Controls.tsx";
 import SpotifyData from "./SpotifyData.tsx";
+import Playlist from "./Playlist.tsx";
 import RecommendationSettingsView from "./RecommendationSettingsView.tsx";
 import PlaylistSettingsView from "./PlaylistSettingsView.tsx";
 import {
@@ -67,6 +68,7 @@ export default function Tempo(props: TempoProps) {
   const [recommendations, setRecommendations] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
+  const [playlist, setPlaylist] = useState(null);
   const [current_track, setTrack] = useState(track);
   const [player, setPlayer] = useState(undefined);
   const [recommendationSettings, setRecommendationSettings] =
@@ -74,7 +76,9 @@ export default function Tempo(props: TempoProps) {
   const [playlistSettings, setPlaylistSettings] = useState(
     playlistDefaultSettings
   );
+  const [restart, setRestart] = useState(false);
 
+  // When the components mount for the first time, fetch the user's top artists and tracks
   useEffect(() => {
     const fetchData = async () => {
       const getTopArtists = await (await fetch("/api/artists")).json();
@@ -93,7 +97,7 @@ export default function Tempo(props: TempoProps) {
   } else if (recommendations !== null) {
     data = [recommendations];
   }
-  console.log(playlistSettings);
+
   /*
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -114,7 +118,9 @@ export default function Tempo(props: TempoProps) {
 
   const updatePlayingSong = async (track: TrackObj) => {
     if (track.uri === current_track.uri) {
-      player.togglePlay();
+      if (player) {
+        (player as any).togglePlay();
+      }
     } else {
       const play = async () => {
         await fetch(`/api/play?track_uri=${track.uri}`);
@@ -126,62 +132,78 @@ export default function Tempo(props: TempoProps) {
 
   return (
     <main role="main">
-      <div className="row mt-3">
-        <div className="col-12 col-md-3 mt-5 sticky-top">
-          <div className="row row-cols-4 row-cols-md-1 sticky-top">
-            <div className="col">
-              <Player
-                tokens={props.tokens}
-                current_track={current_track}
-                setTrack={setTrack}
-                player={player}
-                setPlayer={setPlayer}
-              />
-            </div>
-            {!recommendations ? (
-              <RecommendationSettingsView
-                recommendationSettings={recommendationSettings}
-                setRecommendations={setRecommendations}
-              />
-            ) : (
-              <PlaylistSettingsView
-                playlistSettings={playlistSettings}
-                setPlaylistSettings={setPlaylistSettings}
-              />
-            )}
-            <div className="col">
-              <p>
-                <a href="/log-out">Sign Out</a>
-              </p>
+      {!playlist ? (
+        <div className="row mt-3">
+          <div className="col-12 col-md-3 mt-5 sticky-top">
+            <div className="row row-cols-4 row-cols-md-1 sticky-top">
+              <div className="col">
+                <Player
+                  tokens={props.tokens}
+                  current_track={current_track}
+                  setTrack={setTrack}
+                  player={player}
+                  setPlayer={setPlayer}
+                />
+              </div>
+              {!recommendations ? (
+                <RecommendationSettingsView
+                  recommendationSettings={recommendationSettings}
+                  setRecommendations={setRecommendations}
+                />
+              ) : (
+                <PlaylistSettingsView
+                  playlistSettings={playlistSettings}
+                  setPlaylistSettings={setPlaylistSettings}
+                  setPlaylist={setPlaylist}
+                />
+              )}
+              <div className="col">
+                <p>
+                  <a href="/log-out">Sign Out</a>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col-12 col-md-9">
-          {!recommendations ? (
-            <>
+          <div className="col-12 col-md-9">
+            {!recommendations ? (
+              <>
+                <SpotifyData
+                  spotifyData={data}
+                  currently_playing={current_track}
+                  playTrack={updatePlayingSong}
+                  recommendationSettings={recommendationSettings}
+                  setRecommendationSettings={setRecommendationSettings}
+                />
+                <Controls
+                  recommendationSettings={recommendationSettings}
+                  setRecommendationSettings={setRecommendationSettings}
+                />
+              </>
+            ) : (
               <SpotifyData
                 spotifyData={data}
                 currently_playing={current_track}
                 playTrack={updatePlayingSong}
-                recommendationSettings={recommendationSettings}
-                setRecommendationSettings={setRecommendationSettings}
+                playlistSettings={playlistSettings}
+                setPlaylistSettings={setPlaylistSettings}
               />
-              <Controls
-                recommendationSettings={recommendationSettings}
-                setRecommendationSettings={setRecommendationSettings}
-              />
-            </>
-          ) : (
-            <SpotifyData
-              spotifyData={data}
-              currently_playing={current_track}
-              playTrack={updatePlayingSong}
-              playlistSettings={playlistSettings}
-              setPlaylistSettings={setPlaylistSettings}
-            />
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <>
+          <Playlist
+            setPlaylistSettings={setPlaylistSettings}
+            defaultPlaylistSettings={playlistDefaultSettings}
+            playlist={playlist}
+            setPlaylist={setPlaylist}
+            setRecommendationSettings={setRecommendationSettings}
+            defaultRecommendationSettings={defaultSettings}
+            setCurrentTrack={setTrack}
+            curentTrack={current_track}
+          />
+        </>
+      )}
     </main>
   );
 }

@@ -77,7 +77,6 @@ export default function Player({
         if (!state) {
           return;
         }
-
         setTrack(state.track_window.current_track);
         setPaused(state.paused);
 

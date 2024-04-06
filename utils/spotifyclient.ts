@@ -162,12 +162,19 @@ export async function playTrack(
   return response.text();
 }
 
+/**
+ * Creates a playlist on Spotify.
+ * @param token - The access token for authentication.
+ * @param playlist_name - The name of the playlist.
+ * @param public_playlist - Indicates whether the playlist should be public or not.
+ * @param user_id - The ID of the user creating the playlist.
+ * @returns A Promise that resolves to the created playlist.
+ */
 export async function createPlaylist(
   token: string,
   playlist_name: string,
   public_playlist: boolean,
-  user_id: string,
-  tracks: Array<string>
+  user_id: string
 ): Promise<Playlist> {
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -176,7 +183,6 @@ export async function createPlaylist(
   const body = {
     name: playlist_name,
     public: public_playlist,
-    tracks: tracks,
   };
   const options = {
     method: "POST",
@@ -190,6 +196,13 @@ export async function createPlaylist(
   return response.json();
 }
 
+/**
+ * Adds tracks to a playlist.
+ * @param token - The access token for the Spotify API.
+ * @param playlist_id - The ID of the playlist to add tracks to.
+ * @param tracks - An array of track URIs to add to the playlist.
+ * @returns A promise that resolves to a string representing the response from the API.
+ */
 export async function addTracksToPlaylist(
   token: string,
   playlist_id: string,
@@ -211,6 +224,25 @@ export async function addTracksToPlaylist(
     `${spotifySchema}/playlists/${playlist_id}/tracks`,
     options
   );
+  return response.json();
+}
+
+/**
+ * Gets a playlist from Spotify
+ * @param token - The access token for the Spotify API.
+ * @param playlist_id - The ID of the playlist to add tracks to.
+ * @returns A promise that resolves to a playlist from the Spotify API
+ */
+export async function getPlaylist(
+  token: string,
+  playlist_id: string
+): Promise<Playlist> {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const response = await fetch(`${spotifySchema}/playlists/${playlist_id}`, {
+    headers,
+  });
   return response.json();
 }
 

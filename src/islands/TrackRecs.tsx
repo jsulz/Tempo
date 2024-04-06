@@ -35,8 +35,6 @@ export default function Tracks({
     });
   };
 
-  console.log("hello");
-
   const trackCards = tracks.map((track) => {
     let icon = null;
     const play = <i className="bi bi-play-circle"></i>;

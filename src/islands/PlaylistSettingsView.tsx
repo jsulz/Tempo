@@ -3,9 +3,11 @@ import { PlaylistSettings } from "../../utils/types.ts";
 export default function PlaylistSettingsView({
   playlistSettings,
   setPlaylistSettings,
+  setPlaylist,
 }: {
   playlistSettings: PlaylistSettings;
   setPlaylistSettings: React.Dispatch<React.SetStateAction<PlaylistSettings>>;
+  setPlaylist: React.Dispatch<any>;
 }) {
   const updatePlaylistName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlaylistSettings({
@@ -36,6 +38,7 @@ export default function PlaylistSettingsView({
         body: JSON.stringify(body),
       })
     ).json();
+    setPlaylist(createPlaylist);
   };
 
   let submittable = false;
@@ -43,7 +46,6 @@ export default function PlaylistSettingsView({
     submittable = true;
   }
 
-  console.log(playlistSettings);
   return (
     <div>
       <h3>Playlist Settings</h3>
