@@ -20,7 +20,6 @@ export default function RecommendationSettingsView({
       }
     }
     const params = new URLSearchParams(paramSettings);
-    console.log(params);
     const getRecommendations = await (
       await fetch(`api/recommendations?${params}`)
     ).json();

@@ -54,7 +54,6 @@ export async function getUsersTopArtist(token: string): Promise<TopArtists> {
       uri: artist.uri,
     });
   });
-  console.log(data.items[0]);
   return resp;
 }
 
@@ -90,7 +89,6 @@ export async function getUsersTopTracks(token: string): Promise<TopTracks> {
       uri: track.uri,
     });
   });
-  console.log(data.items[data.items.length - 1]);
   return resp;
 }
 
@@ -158,7 +156,6 @@ export async function playTrack(
     body: JSON.stringify({ uris: [track_uri], position_ms: 0 }),
   };
   const response = await fetch(`${spotifySchema}/me/player/play`, options);
-  console.log(response);
   return response.text();
 }
 
@@ -254,8 +251,6 @@ export async function getPlaylist(
 export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
   const url = refreshSchema;
 
-  console.log(tokens.refresh_token);
-
   const payload = {
     method: "POST",
     headers: {
@@ -281,9 +276,6 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
     refresh_token: response.refresh_token,
     expiration: expiration,
   };
-
-  console.log("New access tokens: ");
-  console.log(user_tokens);
 
   return user_tokens;
 }

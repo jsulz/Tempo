@@ -175,11 +175,11 @@ api.get("/play", async (context) => {
   }
 
   const { track_uri } = context.req.query();
-  console.log(track_uri);
+
   const status = access_token
     ? await playTrack(access_token, track_uri)
     : undefined;
-  console.log(status);
+
   return context.json(status);
 });
 
