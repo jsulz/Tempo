@@ -30,6 +30,9 @@ export default function Player({
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
 
+  const play = <i className="bi bi-play-circle"></i>;
+  const pause = <i className="bi bi-pause-circle"></i>;
+
   const track_image = current_track.album.images.filter(
     (image) => image.height === 64
   );
@@ -114,17 +117,19 @@ export default function Player({
             />
 
             <div className="now-playing__side">
-              <div className="now-playing__name">{current_track.name}</div>
-              <div className="now-playing__artist">
+              <div className="now-playing__name fw-semibold">
+                {current_track.name}
+              </div>
+              <div className="now-playing__artist fw-light">
                 {current_track.artists[0].name}
               </div>
               <button
-                className="btn-spotify"
+                className="btn-primary btn"
                 onClick={() => {
                   player.togglePlay();
                 }}
               >
-                {is_paused ? "PLAY" : "PAUSE"}
+                {is_paused ? play : pause}
               </button>
             </div>
           </div>
