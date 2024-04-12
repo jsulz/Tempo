@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Tokens, TrackObj } from "../../utils/types.ts";
+import { load } from "https://deno.land/std@0.222.1/dotenv/mod.ts";
+import useEnv from "ultra/hooks/use-env.js";
 
 interface PlayerProps {
   tokens: Tokens;
@@ -37,6 +39,7 @@ export default function Player({
     (image) => image.height === 64
   );
   const playerName = "Tempo";
+  const environment: string | undefined = useEnv("ULTRA_PUBLIC_ENVIRONMENT");
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -57,19 +60,22 @@ export default function Player({
 
       player.addListener("ready", ({ device_id }: { device_id: string }) => {
         console.log("Ready with Device ID", device_id);
-        const options = {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${tokens.access_token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ device_ids: [device_id] }),
-        };
-        fetch("https://api.spotify.com/v1/me/player", options)
-          .then((response) => response.text())
-          .then((data) => {
-            console.log(`Playing on device ${device_id}`);
-          });
+        // If in developmeent environment, then don't execute this block, otherwise go ahead
+        if (environment !== "development") {
+          const options = {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${tokens.access_token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ device_ids: [device_id] }),
+          };
+          fetch("https://api.spotify.com/v1/me/player", options)
+            .then((response) => response.text())
+            .then((data) => {
+              console.log(`Playing on device ${device_id}`);
+            });
+        }
       });
 
       player.addListener("not_ready", ({ device_id }) => {

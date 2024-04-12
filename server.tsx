@@ -229,33 +229,4 @@ const tokenHelper = async (context: Context) => {
   return tokens;
 };
 
-/*
-server.get("*", async (context) => {
-
-  const sessionId = await getSessionId(context.req.raw);
-  const isSignedIn = sessionId != null;
-
-  const user = isSignedIn ? await getUserBySession(sessionId) : undefined;
-  const tokens =
-    isSignedIn && user ? await getTokensByUser(user.id) : undefined;
-
-  const requestUrl = new URL(context.req.url);
-  const result = await server.render(
-    <Router hook={staticLocationHook(requestUrl.pathname)}>
-      <App {...{ isSignedIn, tokens }} />
-    </Router>
-  );
-
-  const result = await server.renderWithContext(
-    <StaticRouter location={new URL(context.req.url).pathname}>
-      <App />
-    </StaticRouter>,
-    context
-  );
-  console.log("hello");
-  return context.body(result, 200, {
-    "content-type": "text/html; charset=utf-8",
-  });
-});*/
-
 Deno.serve(server.fetch);
