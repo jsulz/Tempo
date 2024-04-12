@@ -5,6 +5,16 @@ import { Tokens, TrackObj } from "../../utils/types.ts";
 import { load } from "https://deno.land/std@0.222.1/dotenv/mod.ts";
 import useEnv from "ultra/hooks/use-env.js";
 
+declare global {
+  interface Window {
+    onSpotifyWebPlaybackSDKReady: any;
+    Spotify: any;
+  }
+}
+
+let SPSDK = window.onSpotifyWebPlaybackSDKReady;
+let SP = window.Spotify;
+
 interface PlayerProps {
   tokens: Tokens;
   current_track: TrackObj;
@@ -29,17 +39,27 @@ export default function Player({
   player,
   setPlayer,
 }: PlayerProps) {
+  // State to track playback and player
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
 
+  // Icons for play and pause buttons
   const play = <i className="bi bi-play-circle"></i>;
   const pause = <i className="bi bi-pause-circle"></i>;
 
+  // Get the track image from the current track object
   const track_image = current_track.album.images.filter(
     (image) => image.height === 64
   );
+
+  // Player name
   const playerName = "Tempo";
+
+  // Get the environment variable to see if we want the player to load
   const environment: string | undefined = useEnv("ULTRA_PUBLIC_ENVIRONMENT");
+
+  // On page load, create a new spotify player instance
+  // connect it and set up event listeners
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -47,10 +67,10 @@ export default function Player({
 
     document.body.appendChild(script);
 
-    window.onSpotifyWebPlaybackSDKReady = () => {
+    window!.onSpotifyWebPlaybackSDKReady = () => {
       const player = new window.Spotify.Player({
         name: playerName,
-        getOAuthToken: (cb) => {
+        getOAuthToken: (cb: any) => {
           cb(tokens.access_token);
         },
         volume: 0.5,
@@ -61,7 +81,7 @@ export default function Player({
       player.addListener("ready", ({ device_id }: { device_id: string }) => {
         console.log("Ready with Device ID", device_id);
         // If in developmeent environment, then don't execute this block, otherwise go ahead
-        if (environment !== "development") {
+        if (environment !== "production") {
           const options = {
             method: "PUT",
             headers: {
@@ -78,9 +98,12 @@ export default function Player({
         }
       });
 
-      player.addListener("not_ready", ({ device_id }) => {
-        console.log("Device ID has gone offline", device_id);
-      });
+      player.addListener(
+        "not_ready",
+        ({ device_id }: { device_id: string }) => {
+          console.log("Device ID has gone offline", device_id);
+        }
+      );
 
       player.addListener("player_state_changed", (state) => {
         if (!state) {
@@ -103,10 +126,7 @@ export default function Player({
       <>
         <div className="row">
           <div className="main-wrapper">
-            <b>
-              {" "}
-              Instance not active. Transfer your playback using your Spotify app{" "}
-            </b>
+            <div className="spinner-border text-success" role="status"></div>
           </div>
         </div>
       </>
@@ -114,21 +134,26 @@ export default function Player({
   } else {
     return (
       <>
-        <div className="row">
-          <div className="main-wrapper">
-            <img
-              src={track_image[0].url}
-              className="now-playing__cover"
-              alt=""
-            />
-
-            <div className="now-playing__side">
-              <div className="now-playing__name fw-semibold">
+        <div className="row player">
+          <div className="row mb-2">
+            <div className="col-3">
+              <img
+                src={track_image[0].url}
+                className="now-playing__cover"
+                alt=""
+              />
+            </div>
+            <div className="col-8">
+              <div className="now-playing__name fw-semibold fs-7">
                 {current_track.name}
               </div>
-              <div className="now-playing__artist fw-light">
+              <div className="now-playing__artist fw-light fs-7">
                 {current_track.artists[0].name}
               </div>
+            </div>
+          </div>
+          <div className="row mb-2">
+            <div className="col-2">
               <button
                 className="btn-primary btn"
                 onClick={() => {
@@ -137,6 +162,13 @@ export default function Player({
               >
                 {is_paused ? play : pause}
               </button>
+            </div>{" "}
+            <div className="col-10">
+              <img
+                src="../../public/spotify-icons-logos/spotify-icons-logos/icons/01_RGB/Spotify_Icon_RGB_Green.png"
+                height="38"
+              ></img>{" "}
+              Play on Spotify
             </div>
           </div>
         </div>

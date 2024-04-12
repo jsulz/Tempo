@@ -3,9 +3,10 @@ export default function Nav() {
     <header>
       <nav className="navbar navbar-expand-md fixed-top">
         <div className="container">
-          <a className="navbar-brand" href="/">
-            Tempo
-          </a>
+          <img
+            src="public/spotify-icons-logos/spotify-icons-logos/logos/01_RGB/Spotify_Logo_RGB_Green.png"
+            height="70"
+          />
           <button
             className="navbar-toggler"
             type="button"

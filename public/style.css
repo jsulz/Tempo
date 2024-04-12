@@ -1,4 +1,21 @@
+/* Path: public/style.css */
+
+/* bootstrap-style font sizes from 7-10 all in decreasing order of size */
+.fs-7 {
+  font-size: 0.75rem;
+}
+
 html,
 body {
   height: 100%;
+}
+
+/* Sidebar */
+.mt-10 {
+  margin-top: 80px;
+}
+
+/* player specific styles */
+.player {
+  background-color: grey;
 }
