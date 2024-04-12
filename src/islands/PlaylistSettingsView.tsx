@@ -85,7 +85,7 @@ export default function PlaylistSettingsView({
         disabled={!submittable}
         onClick={(e) => createPlaylist(e)}
       >
-        GCreate Playlist
+        Create Playlist
       </button>
     </div>
   );
