@@ -53,9 +53,11 @@ export default function Tracks({
     let recIcon = null;
     const add = <i className="bi bi-plus-circle"></i>;
     const remove = <i className="bi bi-dash-circle"></i>;
+    let selected = "";
     let disabled = false;
     if (recommendationSettings.seed_tracks.includes(track.id!)) {
       recIcon = remove;
+      selected = "btn-selected";
     } else {
       recIcon = add;
       if (recommendationSettings.seed_count >= 5) {
@@ -63,38 +65,50 @@ export default function Tracks({
       }
     }
     return (
-      <div className="col" key={track.id}>
-        <img className="img-fluid" src={track.album.images[1].url} />
-        <p>
-          <a href={track.external_urls!.spotify}>{track.name}</a> from{" "}
-          <a href={track.album.external_urls!.spotify}>{track.album.name}</a>
-        </p>
-        <p>
-          By:{" "}
+      <div className="col tile rounded-2 p-2" key={track.id}>
+        <div className="row">
+          <a href={track.album.external_urls!.spotify}>
+            <img className="img-fluid" src={track.album.images[1].url} />
+          </a>
+        </div>
+        <div className="row mb-2">
+          <a href={track.external_urls!.spotify} className="fw-semibold fs-7">
+            {track.name}
+          </a>
+          <br />
           {track.artists.map((artist) => {
             return (
               <a
                 href={artist.external_urls!.spotify}
                 key={`${artist.name}-artist`}
+                className="fw-light fs-7"
               >
                 {artist.name}
               </a>
             );
           })}
-        </p>
-        <button
-          className="btn btn-primary"
-          onClick={(e) => handleTrackPlaying(e, track)}
-        >
-          {icon}
-        </button>
-        <button
-          className="btn btn-primary"
-          onClick={(e) => handleAddingTrack(e, track)}
-          disabled={disabled}
-        >
-          {recIcon}
-        </button>
+        </div>
+        <div className="row">
+          <div
+            className="btn-group"
+            role="group"
+            aria-label="Track button group"
+          >
+            <button
+              className="btn btn-primary"
+              onClick={(e) => handleTrackPlaying(e, track)}
+            >
+              {icon}
+            </button>
+            <button
+              className={`btn btn-primary ${selected}`}
+              onClick={(e) => handleAddingTrack(e, track)}
+              disabled={disabled}
+            >
+              {recIcon}
+            </button>
+          </div>
+        </div>
       </div>
     );
   });

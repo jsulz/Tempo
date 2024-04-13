@@ -140,7 +140,7 @@ export default function Tempo(props: TempoProps) {
               <div className="col">
                 <Heading headingText="Tempo" />
                 <p className="fs-7">
-                  Select at least one song/artist (and up to 5) to get
+                  Select at least one song or artist (and up to 5) to get
                   recommendations for a playlist.
                 </p>
               </div>
@@ -172,7 +172,7 @@ export default function Tempo(props: TempoProps) {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-9 island rounded-1">
+          <div className="col-12 col-md-9 rounded-1">
             {!recommendations ? (
               <>
                 <SpotifyData

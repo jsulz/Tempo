@@ -58,9 +58,6 @@ export default function Player({
   // Player name
   const playerName = "Tempo";
 
-  // Get the environment variable to see if we want the player to load
-  const environment: string | undefined = useEnv("ULTRA_PUBLIC_ENVIRONMENT");
-
   // On page load, create a new spotify player instance
   // connect it and set up event listeners
   useEffect(() => {
@@ -83,22 +80,19 @@ export default function Player({
 
       player.addListener("ready", ({ device_id }: { device_id: string }) => {
         console.log("Ready with Device ID", device_id);
-        // If in developmeent environment, then don't execute this block, otherwise go ahead
-        if (environment === "production") {
-          const options = {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${tokens.access_token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ device_ids: [device_id] }),
-          };
-          fetch("https://api.spotify.com/v1/me/player", options)
-            .then((response) => response.text())
-            .then((data) => {
-              console.log(`Playing on device ${device_id}`);
-            });
-        }
+        const options = {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${tokens.access_token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ device_ids: [device_id] }),
+        };
+        fetch("https://api.spotify.com/v1/me/player", options)
+          .then((response) => response.text())
+          .then((data) => {
+            console.log(`Playing on device ${device_id}`);
+          });
       });
 
       player.addListener(
