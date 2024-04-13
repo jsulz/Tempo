@@ -13,7 +13,6 @@ import {
 } from "../../utils/types.ts";
 
 interface TempoProps {
-  start: number;
   tokens: Tokens;
 }
 

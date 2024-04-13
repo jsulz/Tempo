@@ -2,21 +2,21 @@
 
 /* CSS Variable overrides */
 :root {
-  --bs-link-color-rgb: var(--bs-secondary-rgb);
-  --bs-link-color-rgba: #c27f61;
-  --bs-link-hover-color-rgb: rgba(222, 226, 230, 0.75);
-  --bs-btn-bg: #c27f61;
-  --bs-primary-rgb: #353f42;
-  --bs-secondary-rgb: #fff;
+  --bs-primary-rgb: #36425f;
+  --bs-secondary-rgb: #deccc0;
   --bg-body-tertiary-rgba: #ffffffa2;
+  --bs-body-bg: #ece8e0dc;
   --bs-tertiary-rgb: #61adc2;
   --bs-tertiary-rgb-active: #1f6e56;
-  --bs-heading-color: #c29f61;
+  --bs-heading-color: #0f0f0f;
   --bs-btn-hover-color: var(--bs-tertiary-rgb-active);
-  --purple: rgb(64, 0, 115);
-  --light-dark: #3e4451;
-  --dark: #191414;
-  --bs-body-color: rgb(222, 226, 230);
+  --bs-emphasis-color-rgb: 255, 255, 255;
+  --bs-link-color: #4b5d80;
+  --bs-link-color-rgb: 75, 93, 128;
+  --bs-link-decoration: underline;
+  --bs-link-hover-color: #647cb3;
+  --bs-link-hover-color-rgb: 100, 124, 179;
+  --bs-code-color: #a13d15;
 }
 
 /* bootstrap-style font sizes */
@@ -26,21 +26,41 @@
 
 /** Global **/
 nav {
-  background-color: var(--purple);
+  background-color: var(--bs-primary-rgb);
+}
+
+.footer {
+  background-color: var(--bs-body-bg);
 }
 
 html,
 body {
   height: 100%;
-  background-color: var(--dark) !important;
 }
 
 .island {
-  background-color: var(--light-dark);
+  background-color: var(--bs-secondary-rgb);
+}
+
+.btn-primary {
+  --bs-btn-color: white;
+  --bs-btn-border-color: var(--bs-primary-rgb);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--bs-link-hover-color);
+  --bs-btn-hover-border-color: var(--bs-link-hover-color);
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--bs-link-color);
+  --bs-btn-active-border-color: var(--bs-link-color);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-bg: transparent;
+  --bs-gradient: none;
+  --bs-btn-bg: var(--bs-primary-rgb);
 }
 
 /** SIDEBAR **/
-.mt-10 {
+.mt-10,
+.mt-sm-10 {
   margin-top: 100px;
 }
 
