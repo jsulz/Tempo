@@ -1,18 +1,47 @@
 /* Path: public/style.css */
 
-/* bootstrap-style font sizes from 7-10 all in decreasing order of size */
+/* CSS Variable overrides */
+:root {
+  --bs-link-color-rgb: var(--bs-secondary-rgb);
+  --bs-link-color-rgba: #c27f61;
+  --bs-link-hover-color-rgb: rgba(222, 226, 230, 0.75);
+  --bs-btn-bg: #c27f61;
+  --bs-primary-rgb: #353f42;
+  --bs-secondary-rgb: #fff;
+  --bg-body-tertiary-rgba: #ffffffa2;
+  --bs-tertiary-rgb: #61adc2;
+  --bs-tertiary-rgb-active: #1f6e56;
+  --bs-heading-color: #c29f61;
+  --bs-btn-hover-color: var(--bs-tertiary-rgb-active);
+  --purple: rgb(64, 0, 115);
+  --light-dark: #3e4451;
+  --dark: #191414;
+  --bs-body-color: rgb(222, 226, 230);
+}
+
+/* bootstrap-style font sizes */
 .fs-7 {
   font-size: 0.75rem;
+}
+
+/** Global **/
+nav {
+  background-color: var(--purple);
 }
 
 html,
 body {
   height: 100%;
+  background-color: var(--dark) !important;
 }
 
-/* Sidebar */
+.island {
+  background-color: var(--light-dark);
+}
+
+/** SIDEBAR **/
 .mt-10 {
-  margin-top: 80px;
+  margin-top: 100px;
 }
 
 /* player specific styles */

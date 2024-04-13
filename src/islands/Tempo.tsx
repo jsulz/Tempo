@@ -131,12 +131,12 @@ export default function Tempo(props: TempoProps) {
   };
 
   return (
-    <main role="main">
+    <main role="main" className="mt-5">
       {!playlist ? (
         <div className="row mt-5">
-          <div className="col-12 col-md-3">
+          <div className="col-12 col-md-3 px-4">
             <div className="row row-cols-4 row-cols-md-1 sticky-top">
-              <div className="col mt-10">
+              <div className="col mt-10 island rounded-1">
                 <Player
                   tokens={props.tokens}
                   current_track={current_track}
@@ -164,7 +164,7 @@ export default function Tempo(props: TempoProps) {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-9">
+          <div className="col-12 col-md-9 island rounded-1">
             {!recommendations ? (
               <>
                 <SpotifyData

@@ -7,7 +7,7 @@ export default function Footer() {
           <div className="col-4 d-flex align-items-center">
             <span className="mb-3 mb-md-0 text-body-primary">
               <a className="navbar-brand" href="https://www.jsulz.com">
-                Tempo by jsulz
+                Tempo by jsulz, for Spotify
               </a>
             </span>
           </div>

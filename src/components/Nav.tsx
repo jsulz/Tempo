@@ -25,7 +25,7 @@ export default function Nav() {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <a className="nav-link" href="https://www.jsulz.com/contact">
-                  Contact <i className="bi bi-box-arrow-up-right"></i>
+                  Contact Tempo <i className="bi bi-box-arrow-up-right"></i>
                 </a>
               </li>
             </ul>
