@@ -114,7 +114,7 @@ export default function Tracks({
   });
 
   return (
-    <div className="row row-cols-2 row-cols-sm-4 row-cols-lg-5">
+    <div className="row row-cols-2 row-cols-sm-4 row-cols-lg-5 mb-5">
       {trackCards.map((card) => card)}
     </div>
   );
