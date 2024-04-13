@@ -29,10 +29,6 @@ nav {
   background-color: var(--bs-primary-rgb);
 }
 
-.footer {
-  background-color: var(--bs-body-bg);
-}
-
 html,
 body {
   height: 100%;
