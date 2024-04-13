@@ -11,6 +11,7 @@ import {
   RecommendationSettings,
   PlaylistSettings,
 } from "../../utils/types.ts";
+import Heading from "../components/Heading.tsx";
 
 interface TempoProps {
   tokens: Tokens;
@@ -64,6 +65,7 @@ const playlistDefaultSettings: PlaylistSettings = {
 };
 
 export default function Tempo(props: TempoProps) {
+  console.log("hello");
   const [recommendations, setRecommendations] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
@@ -135,7 +137,14 @@ export default function Tempo(props: TempoProps) {
         <div className="row mt-5">
           <div className="col-12 col-md-3 px-4">
             <div className="row row-cols-4 row-cols-md-1 sticky-top">
-              <div className="col mt-10 island rounded-1">
+              <div className="col">
+                <Heading headingText="Tempo" />
+                <p className="fs-7">
+                  Select at least one song/artist (and up to 5) to get
+                  recommendations for a playlist.
+                </p>
+              </div>
+              <div className="col rounded-1">
                 <Player
                   tokens={props.tokens}
                   current_track={current_track}

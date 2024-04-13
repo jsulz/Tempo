@@ -54,7 +54,11 @@ export default function App({
       <body>
         <div className="container d-flex h-100 flex-column">
           <Nav />
-          {isSignedIn ? <TempoIsland tokens={tokens} /> : <LogIn />}
+          {isSignedIn ? (
+            <TempoIsland tokens={tokens} hydrationStrategy="visible" />
+          ) : (
+            <LogIn />
+          )}
           <Footer />
         </div>
       </body>

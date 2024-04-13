@@ -6,6 +6,7 @@
   --bs-secondary-rgb: #deccc0;
   --bg-body-tertiary-rgba: #ffffffa2;
   --bs-body-bg: #ece8e0dc;
+  --bs-body-bg-darker: #ece8e0;
   --bs-tertiary-rgb: #61adc2;
   --bs-tertiary-rgb-active: #1f6e56;
   --bs-heading-color: #0f0f0f;
@@ -17,6 +18,9 @@
   --bs-link-hover-color: #647cb3;
   --bs-link-hover-color-rgb: 100, 124, 179;
   --bs-code-color: #a13d15;
+  --spotify-green: #1db954;
+  --spotify-white: #fff;
+  --spotify-black: #191414;
 }
 
 /* bootstrap-style font sizes */
@@ -36,6 +40,10 @@ body {
 
 .island {
   background-color: var(--bs-secondary-rgb);
+}
+
+.tile {
+  background-color: var(--bs-body-bg-darker);
 }
 
 .btn-primary {
@@ -62,5 +70,14 @@ body {
 
 /* player specific styles */
 .player {
-  background-color: grey;
+  background-color: var(--spotify-black);
+  color: var(--bs-body-bg-darker);
+}
+
+.player a {
+  color: var(--bs-body-bg-darker);
+}
+
+.player a:hover {
+  color: white;
 }

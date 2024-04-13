@@ -5,6 +5,7 @@ import { Tokens, TrackObj } from "../../utils/types.ts";
 import { load } from "https://deno.land/std@0.222.1/dotenv/mod.ts";
 import useEnv from "ultra/hooks/use-env.js";
 
+// Add types for Spotify SDK to the window object
 declare global {
   interface Window {
     onSpotifyWebPlaybackSDKReady: any;
@@ -12,9 +13,9 @@ declare global {
   }
 }
 
-let SPSDK = window.onSpotifyWebPlaybackSDKReady;
-let SP = window.Spotify;
-
+/**
+ * Props for the Player component
+ */
 interface PlayerProps {
   tokens: Tokens;
   current_track: TrackObj;
@@ -31,6 +32,8 @@ interface PlayerProps {
  * - tokens: OAuth tokens for authorizing with Spotify
  * - current_track: The currently playing track object
  * - setTrack: Callback to update the currently playing track
+ * - player: The Spotify Player SDK instance
+ * - setPlayer: Callback to update the Spotify Player SDK instance
  */
 export default function Player({
   tokens,
@@ -81,7 +84,7 @@ export default function Player({
       player.addListener("ready", ({ device_id }: { device_id: string }) => {
         console.log("Ready with Device ID", device_id);
         // If in developmeent environment, then don't execute this block, otherwise go ahead
-        if (environment !== "production") {
+        if (environment === "production") {
           const options = {
             method: "PUT",
             headers: {
@@ -121,41 +124,35 @@ export default function Player({
     };
   }, []);
 
+  const inactive_state = (
+    <div className="row pt-2">
+      <div className="main-wrapper">
+        <div className="spinner-border text-success" role="status"></div>
+      </div>
+    </div>
+  );
+
   if (!is_active) {
-    return (
-      <>
-        <div className="row">
-          <div className="main-wrapper">
-            <div className="spinner-border text-success" role="status"></div>
-          </div>
-        </div>
-      </>
-    );
+    return inactive_state;
   } else {
     return (
       <>
-        <div className="row player">
+        <div className="row player player rounded-2 pt-2">
           <div className="row mb-2">
             <div className="col-3">
-              <img
-                src={track_image[0].url}
-                className="now-playing__cover"
-                alt=""
-              />
+              <img src={track_image[0].url} alt="" />
             </div>
             <div className="col-8">
-              <div className="now-playing__name fw-semibold fs-7">
-                {current_track.name}
-              </div>
-              <div className="now-playing__artist fw-light fs-7">
+              <div className="fw-semibold fs-7">{current_track.name}</div>
+              <div className="fw-light fs-7">
                 {current_track.artists[0].name}
               </div>
             </div>
           </div>
-          <div className="row mb-2">
-            <div className="col-2">
+          <div className="row mb-2 align-items-center">
+            <div className="col-3">
               <button
-                className="btn-primary btn"
+                className="btn-primary btn btn-lg"
                 onClick={() => {
                   player.togglePlay();
                 }}
@@ -163,12 +160,14 @@ export default function Player({
                 {is_paused ? play : pause}
               </button>
             </div>{" "}
-            <div className="col-10">
+            <div className="col-9">
               <img
                 src="../../public/spotify-icons-logos/spotify-icons-logos/icons/01_RGB/Spotify_Icon_RGB_Green.png"
                 height="38"
               ></img>{" "}
-              Play on Spotify
+              <a href={`https://open.spotify.com/track/${current_track.id}`}>
+                Play on Spotify
+              </a>
             </div>
           </div>
         </div>

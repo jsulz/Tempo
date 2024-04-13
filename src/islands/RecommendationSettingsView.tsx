@@ -31,14 +31,14 @@ export default function RecommendationSettingsView({
     if (recommendationSettings[setting] !== null) {
       if (typeof recommendationSettings[setting] == "number") {
         settings.push(
-          <div>
+          <div key={setting}>
             <strong>{setting}</strong>
             <p>{recommendationSettings[setting]}</p>
           </div>
         );
       } else {
         settings.push(
-          <div>
+          <div key={setting}>
             <strong>{setting}</strong>
             {Array.isArray(recommendationSettings[setting]) && (
               <ul>
