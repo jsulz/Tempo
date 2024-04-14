@@ -43,7 +43,6 @@ const track: TrackObj = {
 const defaultSettings: RecommendationSettings = {
   limit: 30,
   seed_artists: [],
-  seed_genres: [],
   seed_tracks: [],
   acousticness: null,
   danceability: null,
@@ -65,7 +64,6 @@ const playlistDefaultSettings: PlaylistSettings = {
 };
 
 export default function Tempo(props: TempoProps) {
-  console.log("hello");
   const [recommendations, setRecommendations] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
@@ -136,12 +134,11 @@ export default function Tempo(props: TempoProps) {
       {!playlist ? (
         <div className="row mt-5">
           <div className="col-12 col-md-3 px-4">
-            <div className="row row-cols-4 row-cols-md-1 sticky-top">
-              <div className="col">
+            <div className="row row-cols-1 row-cols-md-1 sticky-top">
+              <div className="d-none d-md-block col">
                 <Heading headingText="Tempo" />
                 <p className="fs-7">
-                  Select at least one song or artist (and up to 5) to get
-                  recommendations for a playlist.
+                  Make the perfect playlist, tailored to your tastes and mood.
                 </p>
               </div>
               <div className="col rounded-1">
@@ -157,6 +154,8 @@ export default function Tempo(props: TempoProps) {
                 <RecommendationSettingsView
                   recommendationSettings={recommendationSettings}
                   setRecommendations={setRecommendations}
+                  topArtists={topArtists}
+                  topTracks={topTracks}
                 />
               ) : (
                 <PlaylistSettingsView

@@ -62,6 +62,13 @@ body {
   --bs-btn-bg: var(--bs-primary-rgb);
 }
 
+.btn.disabled,
+.btn:disabled {
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #a13d15a2;
+  --bs-btn-disabled-border-color: #a13d15;
+}
+
 /** SIDEBAR **/
 .mt-10,
 .mt-sm-10 {
@@ -84,4 +91,12 @@ body {
 
 .btn-selected {
   background-color: var(--spotify-green) !important;
+}
+
+@media (min-width: 768px) {
+  .collapse.dont-collapse-sm {
+    display: block;
+    height: auto !important;
+    visibility: visible;
+  }
 }

@@ -89,11 +89,11 @@ export interface Seeds {
 }
 
 export interface RecommendationSettings {
-  [key: string]: number | null | Array<string>;
+  [key: string]: number | null | undefined | Array<string>;
   limit: number;
   seed_count: number;
   seed_artists: Array<string>;
-  seed_genres: Array<string>;
+  seed_genres?: Array<string>;
   seed_tracks: Array<string>;
   acousticness: number | null;
   danceability: number | null;
