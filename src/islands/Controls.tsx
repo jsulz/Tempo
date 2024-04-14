@@ -1,4 +1,5 @@
 import { RecommendationSettings } from "../../utils/types.ts";
+import Heading from "../components/Heading.tsx";
 import Control from "./Control.tsx";
 
 export default function Controls({
@@ -35,25 +36,30 @@ export default function Controls({
   };
 
   return (
-    <div className="row row-cols-1 row-cols-md-2">
-      <div className="col mb-3 p-0 pe-md-4">
-        {attributes.slice(0, 5).map((attribute) => (
-          <Control
-            key={attribute}
-            attribute={attribute}
-            onChange={updateAttribute}
-          />
-        ))}
+    <>
+      <Heading headingText="Track Attributes" />
+      <div className="container mt-2 mb-3">
+        <div className="row row-cols-1 row-cols-md-2">
+          <div className="col p-0 pe-md-4">
+            {attributes.slice(0, 5).map((attribute) => (
+              <Control
+                key={attribute}
+                attribute={attribute}
+                onChange={updateAttribute}
+              />
+            ))}
+          </div>
+          <div className="col mb-3 p-0">
+            {attributes.slice(5, 10).map((attribute) => (
+              <Control
+                key={attribute}
+                attribute={attribute}
+                onChange={updateAttribute}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="col mb-3 p-0">
-        {attributes.slice(5, 10).map((attribute) => (
-          <Control
-            key={attribute}
-            attribute={attribute}
-            onChange={updateAttribute}
-          />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }

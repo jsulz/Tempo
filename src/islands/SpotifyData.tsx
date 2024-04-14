@@ -48,13 +48,17 @@ export default function SpotifyData({
     playTrack(track);
   };
 
+  const toCapitalize = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   const html: JSX.Element[] = [];
   if (spotifyData) {
     spotifyData.forEach((spotifyCollection: any) => {
       for (const property in spotifyCollection) {
         const heading = (
           <Heading
-            headingText={property.toUpperCase()}
+            headingText={toCapitalize(property)}
             key={property.toUpperCase()}
           />
         );

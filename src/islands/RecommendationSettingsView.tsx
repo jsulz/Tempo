@@ -132,21 +132,20 @@ export default function RecommendationSettingsView({
 
           {recommendationSettings.seed_tracks.length > 0 &&
             settings.seeds.seed_tracks.map((setting) => setting)}
-
-          {settings.atts.length > 0 && (
-            <table className="table table-sm">
-              <thead>
-                <tr>
-                  <th>Setting</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody className="table-group-divider">
-                {settings.atts.map((setting) => setting)}
-              </tbody>
-            </table>
-          )}
         </>
+      )}
+      {settings.atts.length > 0 && (
+        <table className="table table-sm">
+          <thead>
+            <tr>
+              <th>Setting</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody className="table-group-divider">
+            {settings.atts.map((setting) => setting)}
+          </tbody>
+        </table>
       )}
       <button
         className="btn btn-primary"
