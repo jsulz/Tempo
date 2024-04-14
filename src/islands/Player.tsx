@@ -133,7 +133,7 @@ export default function Player({
       <>
         <div className="row player player rounded-2 pt-2 mb-2">
           <div className="row">
-            <div className="col-3">
+            <div className="col-3 mb-2">
               <img src={track_image[0].url} alt="" />
             </div>
             <div className="col-8">
@@ -159,8 +159,11 @@ export default function Player({
                 src="../../public/spotify-icons-logos/spotify-icons-logos/icons/01_RGB/Spotify_Icon_RGB_Green.png"
                 height="38"
               ></img>{" "}
-              <a href={`https://open.spotify.com/track/${current_track.id}`}>
-                Play on Spotify
+              <a
+                target="_blank"
+                href={`https://open.spotify.com/track/${current_track.id}`}
+              >
+                See on Spotify
               </a>
             </div>
           </div>
