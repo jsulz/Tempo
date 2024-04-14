@@ -131,8 +131,8 @@ export default function Player({
   } else {
     return (
       <>
-        <div className="row player player rounded-2 pt-2">
-          <div className="row mb-2">
+        <div className="row player player rounded-2 pt-2 mb-2">
+          <div className="row">
             <div className="col-3">
               <img src={track_image[0].url} alt="" />
             </div>

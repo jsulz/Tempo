@@ -46,22 +46,29 @@ export default function PlaylistSettingsView({
     submittable = true;
   }
 
+  // lock icon JSX
+  const lock = <i className="bi bi-lock-fill"></i>;
+  const unlock = <i className="bi bi-unlock-fill"></i>;
+  let icon = null;
+  if (playlistSettings.public) {
+    icon = unlock;
+  } else {
+    icon = lock;
+  }
+
   return (
-    <div>
+    <div className="mb-3">
       <h3>Playlist Settings</h3>
       <div className="mb-3">
-        <label htmlFor="exampleFormControlInput1" className="form-label">
-          Playlist Name
-        </label>
         <input
           type="text"
           className="form-control"
           id="playlist-name"
-          placeholder="Playlist Name"
+          placeholder="Name"
           onChange={updatePlaylistName}
         />
       </div>
-      <div className="form-check">
+      <div className="form-check mb-3">
         <input
           className="form-check-input"
           type="checkbox"
@@ -70,15 +77,25 @@ export default function PlaylistSettingsView({
           onChange={updatePlaylistPrivacy}
         />
         <label className="form-check-label" htmlFor="private-playlist">
-          Private Playlist
-        </label>
+          Privacy
+        </label>{" "}
+        (Currently: {icon})
       </div>
       {playlistSettings.tracks.length > 0 && (
-        <ul>
-          {playlistSettings.tracks.map((track) => {
-            return <li key={track.id}>{track.name}</li>;
-          })}
-        </ul>
+        <>
+          <strong>Tracks</strong>
+          <ul>
+            {playlistSettings.tracks.map((track) => {
+              return (
+                <li key={track.id}>
+                  <a target="_blank" href={track.external_urls?.spotify}>
+                    {track.name}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </>
       )}
       <button
         className="btn btn-primary"
