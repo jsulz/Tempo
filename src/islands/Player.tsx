@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Tokens, TrackObj } from "../../utils/types.ts";
-import { load } from "https://deno.land/std@0.222.1/dotenv/mod.ts";
-import useEnv from "ultra/hooks/use-env.js";
+import useAsset from "ultra/hooks/use-asset.js";
 
 // Add types for Spotify SDK to the window object
 declare global {
@@ -156,7 +155,7 @@ export default function Player({
             </div>{" "}
             <div className="col-9">
               <img
-                src="../../public/spotify-icons-logos/spotify-icons-logos/icons/01_RGB/Spotify_Icon_RGB_Green.png"
+                src={useAsset("../../public/Spotify_Icon_RGB_Green.png")}
                 height="38"
               ></img>{" "}
               <a

@@ -1,3 +1,5 @@
+import useAsset from "ultra/hooks/use-asset.js";
+
 export default function Nav() {
   return (
     <header>
@@ -5,7 +7,7 @@ export default function Nav() {
         <div className="container">
           <a href="https://open.spotify.com/">
             <img
-              src="public/spotify-icons-logos/spotify-icons-logos/logos/01_RGB/Spotify_Logo_RGB_Green.png"
+              src={useAsset("/public/Spotify_Logo_RGB_Green.png")}
               height="70"
             />
           </a>
