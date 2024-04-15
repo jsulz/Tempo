@@ -125,41 +125,49 @@ export default function Player({
     </div>
   );
 
-  return !is_active ? (
-    inactive_state
-  ) : (
+  const image = (
+    <img src={useAsset("/Spotify_Icon_RGB_Green.png")} height="38"></img>
+  );
+
+  return (
     <>
-      <div className="row player player rounded-2 pt-2 mb-2">
-        <div className="row">
-          <div className="col-3 mb-2">
-            <img src={track_image[0].url} alt="" />
+      {!is_active && inactive_state}
+      {is_active && (
+        <div className="row player player rounded-2 pt-2 mb-2">
+          <div className="row">
+            <div className="col-3 mb-2">
+              <img src={track_image[0].url} alt="" />
+            </div>
+            <div className="col-8">
+              <div className="fw-semibold fs-7">{current_track.name}</div>
+              <div className="fw-light fs-7">
+                {current_track.artists[0].name}
+              </div>
+            </div>
           </div>
-          <div className="col-8">
-            <div className="fw-semibold fs-7">{current_track.name}</div>
-            <div className="fw-light fs-7">{current_track.artists[0].name}</div>
+          <div className="row mb-2 align-items-center">
+            <div className="col-3">
+              <button
+                className="btn-primary btn btn-lg"
+                onClick={() => {
+                  player.togglePlay();
+                }}
+              >
+                {is_paused ? play : pause}
+              </button>
+            </div>{" "}
+            <div className="col-9">
+              {image}{" "}
+              <a
+                target="_blank"
+                href={`https://open.spotify.com/track/${current_track.id}`}
+              >
+                See on Spotify
+              </a>
+            </div>
           </div>
         </div>
-        <div className="row mb-2 align-items-center">
-          <div className="col-3">
-            <button
-              className="btn-primary btn btn-lg"
-              onClick={() => {
-                player.togglePlay();
-              }}
-            >
-              {is_paused ? play : pause}
-            </button>
-          </div>{" "}
-          <div className="col-9">
-            <a
-              target="_blank"
-              href={`https://open.spotify.com/track/${current_track.id}`}
-            >
-              See on Spotify
-            </a>
-          </div>
-        </div>
-      </div>
+      )}
     </>
   );
 }
