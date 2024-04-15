@@ -130,7 +130,7 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   margin-top: -12px; /* Centers thumb on the track */
   background-color: var(--spotify-green);
-  border-radius: 3;
+  -webkit-border-radius: 3;
 }
 
 /***** Focus Styles *****/

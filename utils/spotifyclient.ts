@@ -265,6 +265,8 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
   const body = await fetch(url, payload);
   const response = await body.json();
 
+  console.log("refreshing");
+
   // Set up the tokens that we will store for future API calls
   const currentTime = new Date().getTime() / 1000;
   const expiration = response.expires_in

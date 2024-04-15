@@ -17,7 +17,7 @@ import {
   playTrack,
 } from "./utils/spotifyclient.ts";
 import { User, Tokens, Seeds } from "./utils/types.ts";
-import { setUser, getUserBySession } from "./utils/db.ts";
+import { setUser, getUserBySession, deleteSession } from "./utils/db.ts";
 import App from "./src/app.tsx";
 import { getTokensByUser } from "./utils/db.ts";
 import { createPlaylist } from "./utils/spotifyclient.ts";
@@ -111,6 +111,8 @@ server.get("/callback", async (context) => {
 });
 
 server.get("/log-out", async (context) => {
+  const sessionId = await getSessionId(context.req.raw);
+  await deleteSession(sessionId);
   return await signOut(context.req.raw);
 });
 
@@ -206,16 +208,13 @@ api.post("/playlist", async (context) => {
     user.id
   );
   // add tracks to playlist through spotifyclient
-  console.log(body.tracks);
   const tracks = await addTracksToPlaylist(
     access_token,
     playlist.id,
     body.tracks
   );
-  console.log(tracks);
   // Get the final playlist from Spotify
   const finalPlaylist = await getPlaylist(access_token, playlist.id);
-  console.log(finalPlaylist);
   return context.json(finalPlaylist);
 });
 

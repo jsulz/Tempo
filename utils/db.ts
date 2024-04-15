@@ -26,13 +26,8 @@ export async function getTokensByUser(user_id: string) {
     tokens.value.expiration &&
     tokens.value.expiration < currTime
   ) {
-    console.log("old tokens");
-    console.log(tokens.value);
-
-    console.log("getting new tokens");
     const new_tokens = await refreshAccessTokens(tokens.value);
     await kv.atomic().set(["tokens_by_user", user_id], new_tokens).commit();
-    console.log(new_tokens);
     return new_tokens;
   }
   return tokens.value;
@@ -40,4 +35,9 @@ export async function getTokensByUser(user_id: string) {
 
 export async function setTokensByUser(user_id: number, tokens: Tokens) {
   await kv.atomic().set(["tokens_by_user", user_id], tokens).commit();
+}
+
+// delete the current session
+export async function deleteSession(session: string) {
+  await kv.delete(["users_by_session", session]);
 }
