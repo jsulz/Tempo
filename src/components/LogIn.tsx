@@ -29,7 +29,7 @@ export default function LogIn() {
                 <a className="btn btn-primary" href="/log-in">
                   <img
                     src={useAsset(
-                      "public/spotify-icons-logos/spotify-icons-logos/icons/01_RGB/Spotify_Icon_RGB_Green.png"
+                      "/public/spotify-icons-logos/spotify-icons-logos/icons/01_RGB/Spotify_Icon_RGB_Green.png"
                     )}
                     height="40"
                   />
