@@ -64,17 +64,9 @@ const playlistDefaultSettings: PlaylistSettings = {
 };
 
 const testPlaylist = {
-  collaborative: false,
-  description: "",
   external_urls: {
     spotify: "https://open.spotify.com/playlist/2Zi5lAJD9TX0SjNWfIcc6o",
   },
-  followers: {
-    href: null,
-    total: 0,
-  },
-  href: "https://api.spotify.com/v1/playlists/2Zi5lAJD9TX0SjNWfIcc6o?locale=*",
-  id: "2Zi5lAJD9TX0SjNWfIcc6o",
   images: [
     {
       height: null,
@@ -93,25 +85,11 @@ const testPlaylist = {
     type: "user",
     uri: "spotify:user:jsulz",
   },
-  primary_color: null,
   public: true,
-  snapshot_id: "MSwyMjUyZTY2MTg2ZTg3YzAzODhmNjMyNGNiNzg4YzcxNjlhOWFmODUz",
   tracks: {
     href: "https://api.spotify.com/v1/playlists/2Zi5lAJD9TX0SjNWfIcc6o/tracks?offset=0&limit=100&locale=*",
     items: [
       {
-        added_at: "2024-04-14T20:48:32Z",
-        added_by: {
-          external_urls: {
-            spotify: "https://open.spotify.com/user/jsulz",
-          },
-          href: "https://api.spotify.com/v1/users/jsulz",
-          id: "jsulz",
-          type: "user",
-          uri: "spotify:user:jsulz",
-        },
-        is_local: false,
-        primary_color: null,
         track: {
           preview_url:
             "https://p.scdn.co/mp3-preview/3672e35a35e233509260de4c5e551eb2482e450a?cid=9111aa4b1aa54ce5a8435d0fd12f45c5",
@@ -199,18 +177,6 @@ const testPlaylist = {
         },
       },
       {
-        added_at: "2024-04-14T20:48:32Z",
-        added_by: {
-          external_urls: {
-            spotify: "https://open.spotify.com/user/jsulz",
-          },
-          href: "https://api.spotify.com/v1/users/jsulz",
-          id: "jsulz",
-          type: "user",
-          uri: "spotify:user:jsulz",
-        },
-        is_local: false,
-        primary_color: null,
         track: {
           preview_url:
             "https://p.scdn.co/mp3-preview/02d039af00079d7c8a6a8456f0ef55b3741cc69a?cid=9111aa4b1aa54ce5a8435d0fd12f45c5",
@@ -271,8 +237,8 @@ const testPlaylist = {
                   "https://open.spotify.com/artist/6b0G9aPXmaLLDWJHhCrv1Q",
               },
               href: "https://api.spotify.com/v1/artists/6b0G9aPXmaLLDWJHhCrv1Q",
-              id: "6b0G9aPXmaLLDWJHhCrv1Q",
-              name: "Me Like Bees",
+              id: "6b0G9aPXmaLLDWhCr1Q",
+              name: "Me Like Beesss",
               type: "artist",
               uri: "spotify:artist:6b0G9aPXmaLLDWJHhCrv1Q",
             },
@@ -309,21 +275,14 @@ const testPlaylist = {
         },
       },
     ],
-    limit: 100,
-    next: null,
-    offset: 0,
-    previous: null,
-    total: 2,
   },
-  type: "playlist",
-  uri: "spotify:playlist:2Zi5lAJD9TX0SjNWfIcc6o",
 };
 
 export default function Tempo(props: TempoProps) {
   const [recommendations, setRecommendations] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
   const [topArtists, setTopArtists] = useState(null);
-  const [playlist, setPlaylist] = useState(testPlaylist);
+  const [playlist, setPlaylist] = useState(null);
   const [current_track, setTrack] = useState(track);
   const [player, setPlayer] = useState(undefined);
   const [recommendationSettings, setRecommendationSettings] =

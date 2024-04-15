@@ -206,13 +206,16 @@ api.post("/playlist", async (context) => {
     user.id
   );
   // add tracks to playlist through spotifyclient
+  console.log(body.tracks);
   const tracks = await addTracksToPlaylist(
     access_token,
     playlist.id,
     body.tracks
   );
+  console.log(tracks);
   // Get the final playlist from Spotify
   const finalPlaylist = await getPlaylist(access_token, playlist.id);
+  console.log(finalPlaylist);
   return context.json(finalPlaylist);
 });
 
