@@ -6,10 +6,7 @@ export default function Nav() {
       <nav className="navbar navbar-expand-md fixed-top">
         <div className="container">
           <a href="https://open.spotify.com/">
-            <img
-              src={useAsset("/public/Spotify_Logo_RGB_Green.png")}
-              height="70"
-            />
+            <img src={useAsset("/Spotify_Logo_RGB_Green.png")} height="70" />
           </a>
           <ul className="navbar-nav">
             <li className="nav-item">

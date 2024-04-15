@@ -28,7 +28,7 @@ export default function LogIn() {
               <div className="col-6">
                 <a className="btn btn-primary" href="/log-in">
                   <img
-                    src={useAsset("/public/Spotify_Icon_RGB_Green.png")}
+                    src={useAsset("/Spotify_Icon_RGB_Green.png")}
                     height="40"
                   />
                   {"  "}

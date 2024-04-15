@@ -125,49 +125,41 @@ export default function Player({
     </div>
   );
 
-  if (!is_active) {
-    return inactive_state;
-  } else {
-    return (
-      <>
-        <div className="row player player rounded-2 pt-2 mb-2">
-          <div className="row">
-            <div className="col-3 mb-2">
-              <img src={track_image[0].url} alt="" />
-            </div>
-            <div className="col-8">
-              <div className="fw-semibold fs-7">{current_track.name}</div>
-              <div className="fw-light fs-7">
-                {current_track.artists[0].name}
-              </div>
-            </div>
+  return !is_active ? (
+    inactive_state
+  ) : (
+    <>
+      <div className="row player player rounded-2 pt-2 mb-2">
+        <div className="row">
+          <div className="col-3 mb-2">
+            <img src={track_image[0].url} alt="" />
           </div>
-          <div className="row mb-2 align-items-center">
-            <div className="col-3">
-              <button
-                className="btn-primary btn btn-lg"
-                onClick={() => {
-                  player.togglePlay();
-                }}
-              >
-                {is_paused ? play : pause}
-              </button>
-            </div>{" "}
-            <div className="col-9">
-              <img
-                src={useAsset("../../public/Spotify_Icon_RGB_Green.png")}
-                height="38"
-              ></img>{" "}
-              <a
-                target="_blank"
-                href={`https://open.spotify.com/track/${current_track.id}`}
-              >
-                See on Spotify
-              </a>
-            </div>
+          <div className="col-8">
+            <div className="fw-semibold fs-7">{current_track.name}</div>
+            <div className="fw-light fs-7">{current_track.artists[0].name}</div>
           </div>
         </div>
-      </>
-    );
-  }
+        <div className="row mb-2 align-items-center">
+          <div className="col-3">
+            <button
+              className="btn-primary btn btn-lg"
+              onClick={() => {
+                player.togglePlay();
+              }}
+            >
+              {is_paused ? play : pause}
+            </button>
+          </div>{" "}
+          <div className="col-9">
+            <a
+              target="_blank"
+              href={`https://open.spotify.com/track/${current_track.id}`}
+            >
+              See on Spotify
+            </a>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
