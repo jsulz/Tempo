@@ -119,7 +119,7 @@ input[type="range"]::-moz-range-track {
 /***** Firefox *****/
 input[type="range"]::-moz-range-thumb {
   border: none; /*Removes extra border that FF applies*/
-  border-radius: 3; /*Removes default border-radius that FF applies*/
+  border-radius: 10px; /*Removes default border-radius that FF applies*/
   background-color: var(--spotify-green);
 }
 
@@ -130,7 +130,7 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   margin-top: -12px; /* Centers thumb on the track */
   background-color: var(--spotify-green);
-  -webkit-border-radius: 3;
+  -webkit-border-radius: 10px;
 }
 
 /***** Focus Styles *****/

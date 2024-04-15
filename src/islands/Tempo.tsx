@@ -12,6 +12,7 @@ import {
   PlaylistSettings,
 } from "../../utils/types.ts";
 import Heading from "../components/Heading.tsx";
+import Logout from "../components/Logout.tsx";
 
 interface TempoProps {
   tokens: Tokens;
@@ -348,7 +349,7 @@ export default function Tempo(props: TempoProps) {
     <main role="main" className="mt-5">
       {!playlist ? (
         <div className="row mt-5">
-          <div className="col-12 col-md-3 px-4">
+          <div className="col-12 col-lg-3 px-4">
             <div className="row row-cols-1 row-cols-md-1 sticky-top">
               <div className="d-none d-md-block col">
                 <Heading headingText="Tempo" />
@@ -366,23 +367,25 @@ export default function Tempo(props: TempoProps) {
                 />
               </div>
               {!recommendations ? (
-                <RecommendationSettingsView
-                  recommendationSettings={recommendationSettings}
-                  setRecommendations={setRecommendations}
-                  topArtists={topArtists}
-                  topTracks={topTracks}
-                />
+                <div className="col">
+                  <RecommendationSettingsView
+                    recommendationSettings={recommendationSettings}
+                    setRecommendations={setRecommendations}
+                    topArtists={topArtists}
+                    topTracks={topTracks}
+                  />
+                </div>
               ) : (
-                <PlaylistSettingsView
-                  playlistSettings={playlistSettings}
-                  setPlaylistSettings={setPlaylistSettings}
-                  setPlaylist={setPlaylist}
-                />
+                <div className="col">
+                  <PlaylistSettingsView
+                    playlistSettings={playlistSettings}
+                    setPlaylistSettings={setPlaylistSettings}
+                    setPlaylist={setPlaylist}
+                  />
+                </div>
               )}
               <div className="col">
-                <p>
-                  <a href="/log-out">Sign Out</a>
-                </p>
+                <Logout />
               </div>
             </div>
           </div>

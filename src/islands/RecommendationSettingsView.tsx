@@ -104,7 +104,7 @@ export default function RecommendationSettingsView({
     submittable = true;
   }
   return (
-    <div className="mb-3">
+    <div className="row mb-3">
       <h4>Recommendation Settings</h4>
       {recommendationSettings.seed_artists.length +
         recommendationSettings.seed_tracks.length ===
