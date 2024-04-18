@@ -21,7 +21,7 @@ export interface User {
 
 export interface Tokens {
   access_token: string;
-  refresh_token: string;
+  refresh_token: string | undefined;
   expiration: number | undefined;
 }
 

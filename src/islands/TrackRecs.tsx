@@ -1,3 +1,4 @@
+import { addTracksToPlaylist } from "../../.ultra/utils/spotifyclient.js";
 import { TrackObj, PlaylistSettings } from "../../utils/types.ts"; // Add import statement for RecommendationSettings type
 
 export default function Tracks({
@@ -103,9 +104,47 @@ export default function Tracks({
     );
   });
 
+  //function that handles adding all tracks to the playlist settings
+  const addTracksToPlaylist = (e) => {
+    const checked = e.target.checked;
+    // if checked, then add all of the tracks that aren't already in playlist settings, to playlist settings
+    if (checked) {
+      tracks.forEach((track) => {
+        if (!playlistSettings.tracks.includes(track)) {
+          playlistSettings.tracks.push(track);
+        }
+      });
+      setPlaylistSettings({
+        ...playlistSettings,
+        tracks: playlistSettings.tracks,
+      });
+    } else {
+      // if unchecked, then remove all tracks from playlist settings
+      setPlaylistSettings({
+        ...playlistSettings,
+        tracks: [],
+      });
+    }
+  };
+
   return (
-    <div className="row row-cols-2 row-cols-sm-4 row-cols-lg-5">
-      {trackCards.map((card) => card)}
-    </div>
+    <>
+      <div className="form-check">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          value=""
+          id="flexCheckDefault"
+          onChange={(e) => addTracksToPlaylist(e)}
+        />
+        <label className="form-check-label" htmlFor="flexCheckDefault">
+          Add all tracks to playlist
+        </label>
+      </div>
+
+      <div className="row row-cols-2 row-cols-sm-4 row-cols-lg-5">
+        {trackCards.map((card) => card)}
+      </div>
+    </>
   );
 }

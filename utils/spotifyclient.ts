@@ -1,4 +1,3 @@
-import Tracks from "../src/islands/Tracks.tsx";
 import {
   TopArtists,
   SpotifyUser,
@@ -26,8 +25,13 @@ export async function getSpotifyUser(token: string): Promise<SpotifyUser> {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  const resp = await fetch(`${spotifySchema}/me`, { headers });
-  return resp.json();
+  try {
+    const resp = await fetch(`${spotifySchema}/me`, { headers });
+    return resp.json();
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to get Spotify user");
+  }
 }
 
 /**
@@ -258,7 +262,7 @@ export async function refreshAccessTokens(tokens: Tokens): Promise<Tokens> {
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: tokens.refresh_token,
+      refresh_token: tokens.refresh_token!,
       client_id: Deno.env.get("SPOTIFY_CLIENT_ID")!,
     }),
   };

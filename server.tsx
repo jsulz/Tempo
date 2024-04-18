@@ -78,36 +78,35 @@ server.get("/callback", async (context) => {
     context.req.raw,
     spotifyOauthClient
   );
-  // Get spotify user information and map it to the application user
-  const spotifyUser = await getSpotifyUser(tokens.accessToken);
-  const user: User = {
-    id: spotifyUser.id,
-    display_name: spotifyUser.display_name,
-    email: spotifyUser.email,
-    images: spotifyUser.images,
-  };
+  // Try to get spotify user information and map it to the application user
+  // If the call to the endpoint fails for whatever reason, we will return the response
+  try {
+    const spotifyUser = await getSpotifyUser(tokens.accessToken);
+    const user: User = {
+      id: spotifyUser.id,
+      display_name: spotifyUser.display_name,
+      email: spotifyUser.email,
+      images: spotifyUser.images,
+    };
 
-  // Set up the tokens that we will store for future API calls
-  const currentTime = new Date().getTime() / 1000;
-  const expiration = tokens.expiresIn
-    ? currentTime + tokens.expiresIn
-    : undefined;
+    // Set up the tokens that we will store for future API calls
+    const currentTime = new Date().getTime() / 1000;
+    const expiration = tokens.expiresIn
+      ? currentTime + tokens.expiresIn
+      : undefined;
 
-  // Figure out how to squelch this better
-  if (!tokens.refreshToken) {
-    tokens.refreshToken = "124";
-    console.error("error in refresh token");
+    const user_tokens: Tokens = {
+      access_token: tokens.accessToken,
+      refresh_token: tokens.refreshToken,
+      expiration: expiration,
+    };
+    // Set the information in the Deno KV
+    await setUser(user, sessionId, user_tokens);
+    return response;
+  } catch (e) {
+    console.error(e);
+    return response;
   }
-
-  const user_tokens: Tokens = {
-    access_token: tokens.accessToken,
-    refresh_token: tokens.refreshToken,
-    expiration: expiration,
-  };
-  // Set the information in the Deno KV
-  await setUser(user, sessionId, user_tokens);
-
-  return response;
 });
 
 server.get("/log-out", async (context) => {
