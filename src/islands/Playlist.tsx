@@ -31,7 +31,7 @@ export default function Playlist({ playlist }: { playlist: any }) {
     initialVal
   );
   const hours = Math.floor(totalDuration / 3600000);
-  const minutes = Math.floor(totalDuration / 1000 / 60);
+  const minutes = Math.floor((totalDuration % 3600000) / 1000 / 60);
 
   // convert the duration of a track from milliseconds to minute:second format
   const trackDuration = (duration: number) => {
