@@ -57,8 +57,13 @@ export default function PlaylistSettingsView({
   }
 
   return (
-    <div className="mb-3">
+    <div className="row mb-3">
       <h3>Playlist Settings</h3>
+      <p className="fs-7">
+        Create a playlist with the tracks you've selected. To create the
+        playlist, you must provide it with a name. You may optionally decide to
+        make the playlist public or private.
+      </p>
       <div className="mb-3">
         <input
           type="text"
