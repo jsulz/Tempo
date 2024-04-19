@@ -105,7 +105,7 @@ export default function Tracks({
   });
 
   //function that handles adding all tracks to the playlist settings
-  const addTracksToPlaylist = (e) => {
+  const addTracksToPlaylist = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     // if checked, then add all of the tracks that aren't already in playlist settings, to playlist settings
     if (checked) {

@@ -34,6 +34,13 @@ export default function LogIn() {
                   {"  "}
                   Log in through Spotify
                 </a>
+                <br />
+                <small>
+                  Tempo is in dev mode - if you would like access, please email{" "}
+                  <a href="mailto:j.sulzdorf@gmail.com" target="_blank">
+                    j.sulzdorf@gmail.com
+                  </a>
+                </small>
               </div>
             </div>
           </p>

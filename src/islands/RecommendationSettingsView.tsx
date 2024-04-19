@@ -10,8 +10,8 @@ export default function RecommendationSettingsView({
   setRecommendations: React.Dispatch<
     React.SetStateAction<RecommendationSettings>
   >;
-  topArtists: Array<TrackObj>;
-  topTracks: Array<ArtistObj>;
+  topArtists: any;
+  topTracks: any;
 }) {
   const getRecommendations = async () => {
     const paramSettings: any = {};
@@ -74,7 +74,7 @@ export default function RecommendationSettingsView({
             <strong>{toCapitalize(setting.slice(5))}</strong>
             {Array.isArray(recommendationSettings[setting]) && (
               <ul>
-                {recommendationSettings[setting]!.map((ids) => {
+                {recommendationSettings[setting]!.map((ids: any) => {
                   const obj = getObj(
                     ids,
                     setting === "seed_artists"
