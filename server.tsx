@@ -161,6 +161,10 @@ api.get("/recommendations", async (context) => {
     seeds[key] = seedQuery[key];
   }
 
+  // Parse the seeds into a readable format so that we can return it to the client
+  // If a playlist is created, this is what will be the description of the playlist
+  console.log(seeds);
+
   const recommendations = access_token
     ? await getRecommendations(access_token, seeds)
     : undefined;
@@ -204,6 +208,7 @@ api.post("/playlist", async (context) => {
     access_token,
     body.name,
     body.public,
+    body.description,
     user.id
   );
   // add tracks to playlist through spotifyclient
@@ -212,6 +217,7 @@ api.post("/playlist", async (context) => {
     playlist.id,
     body.tracks
   );
+  console.log(playlist);
   // Get the final playlist from Spotify
   const finalPlaylist = await getPlaylist(access_token, playlist.id);
   return context.json(finalPlaylist);

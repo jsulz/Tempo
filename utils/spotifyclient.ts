@@ -1,3 +1,4 @@
+import { createImportMapResolver } from "https://deno.land/x/mesozoic@v1.3.10/lib/graph/resolve.ts";
 import {
   TopArtists,
   SpotifyUser,
@@ -175,6 +176,7 @@ export async function createPlaylist(
   token: string,
   playlist_name: string,
   public_playlist: boolean,
+  playlist_description: string,
   user_id: string
 ): Promise<Playlist> {
   const headers = {
@@ -184,6 +186,7 @@ export async function createPlaylist(
   const body = {
     name: playlist_name,
     public: public_playlist,
+    description: playlist_description,
   };
   const options = {
     method: "POST",
@@ -194,6 +197,7 @@ export async function createPlaylist(
     `${spotifySchema}/users/${user_id}/playlists`,
     options
   );
+  console.log(body);
   return response.json();
 }
 

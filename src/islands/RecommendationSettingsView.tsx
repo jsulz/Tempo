@@ -1,10 +1,17 @@
-import { ArtistObj, TrackObj } from "../../utils/types.ts";
-import { RecommendationSettings } from "../../utils/types.ts";
+import { parseModule } from "https://deno.land/x/deno_graph@0.41.0/mod.ts";
+import {
+  ArtistObj,
+  TrackObj,
+  RecommendationSettings,
+  PlaylistSettings,
+} from "../../utils/types.ts";
 export default function RecommendationSettingsView({
   recommendationSettings,
   setRecommendations,
   topArtists,
   topTracks,
+  playlistSettings,
+  setPlaylistSettings,
 }: {
   recommendationSettings: RecommendationSettings;
   setRecommendations: React.Dispatch<
@@ -12,17 +19,49 @@ export default function RecommendationSettingsView({
   >;
   topArtists: any;
   topTracks: any;
+  playlistSettings: PlaylistSettings;
+  setPlaylistSettings: React.Dispatch<React.SetStateAction<PlaylistSettings>>;
 }) {
   const getRecommendations = async () => {
     const paramSettings: any = {};
+    let description = "";
     for (const setting in recommendationSettings) {
       if (
         recommendationSettings[setting] !== null &&
         setting !== "seed_count"
       ) {
         paramSettings[setting] = recommendationSettings[setting];
+        // if the setting is seed_artists or seed_tracks, we need to get the names of the artists/tracks
+        // use the id to get the object name from topArtists or topTracks
+        if (setting === "seed_artists" || setting === "seed_tracks") {
+          if (recommendationSettings[setting].length > 0) {
+            description += `${setting.slice(5)}: `;
+            const names = [];
+            for (const id of recommendationSettings[setting]) {
+              const obj = getObj(
+                id,
+                setting === "seed_artists"
+                  ? topArtists.artists
+                  : topTracks.tracks
+              );
+              names.push(obj!.name);
+            }
+            description += `${names.join(", ")} -- `;
+          }
+        } else if (setting !== "limit") {
+          description += `${setting}: ${recommendationSettings[setting]} -- `;
+        }
       }
     }
+    // If the decription is longer than 300 characters, truncate it with an elipis
+    if (description.length > 300) {
+      description = description.slice(0, 297) + "...";
+    }
+    // set the description
+    setPlaylistSettings({
+      ...playlistSettings,
+      description,
+    });
     const params = new URLSearchParams(paramSettings);
     const getRecommendations = await (
       await fetch(`api/recommendations?${params}`)
@@ -85,7 +124,7 @@ export default function RecommendationSettingsView({
                     <li key={ids}>
                       {
                         <a target="_blank" href={obj?.external_urls?.spotify}>
-                          {obj.name}
+                          {obj!.name}
                         </a>
                       }
                     </li>

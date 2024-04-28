@@ -111,6 +111,7 @@ export interface PlaylistSettings {
   name: string;
   public: boolean;
   tracks: Array<TrackObj>;
+  description: string;
 }
 
 export interface SpotifySeeds {

@@ -62,6 +62,7 @@ const playlistDefaultSettings: PlaylistSettings = {
   name: "",
   public: true,
   tracks: [],
+  description: "",
 };
 
 const testPlaylist = {
@@ -373,6 +374,8 @@ export default function Tempo(props: TempoProps) {
                     setRecommendations={setRecommendations}
                     topArtists={topArtists}
                     topTracks={topTracks}
+                    playlistSettings={playlistSettings}
+                    setPlaylistSettings={setPlaylistSettings}
                   />
                 </div>
               ) : (

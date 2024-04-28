@@ -28,7 +28,9 @@ export default function PlaylistSettingsView({
       name: playlistSettings.name,
       public: playlistSettings.public,
       tracks: trackIds,
+      description: playlistSettings.description,
     };
+    console.log(body);
     const createPlaylist = await (
       await fetch("/api/playlist", {
         method: "POST",
